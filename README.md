@@ -1,5 +1,5 @@
 <p align="center">
-    <img src="https://raw.githubusercontent.com/jnlewis/notai/master/docs/images/logo.png" width="128" height="128" alt="Notai">
+    <img src="https://github.com/jnlewis/notai-web/raw/main/docs/images/logo.png" width="128" height="128" alt="Notai">
 </p>
 
 # NOTAI
