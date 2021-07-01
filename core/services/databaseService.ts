@@ -11,7 +11,7 @@ class DatabaseService {
   }
 
   async updateEscrowStatus(recordId: string, newStatus: string) {
-    this.patch(`${this.apiUrl}/rest/escrow/${recordId}`, { status: newStatus}).then((response) => {
+    this.patch(`${this.apiUrl}/rest/escrow/${recordId}`, { status: newStatus }).then((response) => {
       console.log(response);
     });
   }
@@ -32,10 +32,15 @@ class DatabaseService {
         });
     });
   }
-  
-  async getEscrowsByCreatorWithStatus(creatorAddress: string, status: string): Promise<EscrowData[]> {
+
+  async getEscrowsByCreatorWithStatus(
+    creatorAddress: string,
+    status: string,
+  ): Promise<EscrowData[]> {
     return new Promise((resolve, reject) => {
-      this.get(`${this.apiUrl}/rest/escrow?q={"creator_address": "${creatorAddress}", "status": "${status}"}`)
+      this.get(
+        `${this.apiUrl}/rest/escrow?q={"creator_address": "${creatorAddress}", "status": "${status}"}`,
+      )
         .then((data) => {
           resolve(data);
         })
@@ -44,10 +49,15 @@ class DatabaseService {
         });
     });
   }
-  
-  async getEscrowsByCreatorWithoutStatus(creatorAddress: string, status: string): Promise<EscrowData[]> {
+
+  async getEscrowsByCreatorWithoutStatus(
+    creatorAddress: string,
+    status: string,
+  ): Promise<EscrowData[]> {
     return new Promise((resolve, reject) => {
-      this.get(`${this.apiUrl}/rest/escrow?q={"creator_address": "${creatorAddress}", "status": {"$not" : "${status}"}}`)
+      this.get(
+        `${this.apiUrl}/rest/escrow?q={"creator_address": "${creatorAddress}", "status": {"$not" : "${status}"}}`,
+      )
         .then((data) => {
           resolve(data);
         })

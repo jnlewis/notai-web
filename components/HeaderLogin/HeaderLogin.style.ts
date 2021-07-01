@@ -22,7 +22,7 @@ export default css.global`
     padding: 0;
     line-height: 1;
     display: inline-block;
-    font-family: "Montserrat", sans-serif;
+    font-family: 'Montserrat', sans-serif;
     font-weight: 300;
     letter-spacing: 3px;
     text-transform: uppercase;
@@ -94,7 +94,7 @@ export default css.global`
     text-decoration: none;
     display: inline-block;
     color: #333;
-    font-family: "Montserrat", sans-serif;
+    font-family: 'Montserrat', sans-serif;
     font-weight: 400;
     font-size: 14px;
     outline: none;

@@ -34,7 +34,6 @@ class PaymentService {
   }
 
   async getEscrow(escrowAddress: string): Promise<Escrow> {
-    
     return new Promise<Escrow>((resolve, reject) => {
       let result: Escrow = null;
 
@@ -83,26 +82,25 @@ class PaymentService {
   }
 
   async cancelEscrow(escrowAddress: string): Promise<boolean> {
-
     return new Promise<boolean>((resolve, reject) => {
-      databaseService.getEscrow(escrowAddress)
-      .then((data) => {
-        if (data) {
-          this.updateEscrowStatus(data._id, 'cancelled')
-          .then(() => {
-            resolve(true);
-          })
-          .catch((e) => reject(e));
-        }
-      })
-      .catch((error) => {
-        reject(error);
-      });
+      databaseService
+        .getEscrow(escrowAddress)
+        .then((data) => {
+          if (data) {
+            this.updateEscrowStatus(data._id, 'cancelled')
+              .then(() => {
+                resolve(true);
+              })
+              .catch((e) => reject(e));
+          }
+        })
+        .catch((error) => {
+          reject(error);
+        });
     });
   }
 
   async releaseEscrow(escrowAddress: string) {
-    
     // TODO: check api condition
 
     this.updateEscrowStatus(escrowAddress, 'released');
@@ -115,27 +113,22 @@ class PaymentService {
   }
 
   private async checkReleaseCondition(escrow: Escrow): Promise<boolean> {
-
     return new Promise<boolean>((resolve, reject) => {
-
       fetch(escrow.conditionApi)
         .then((response) => response.json())
         .then((data) => {
-
           var value = jsonpath.query(data, escrow.conditionField);
-          
+
           // TODO: convert field type
 
           // TODO: apply match criteria
 
-          
           resolve(true);
         })
         .catch((error) => {
           reject(error);
         });
     });
-    
   }
 }
 

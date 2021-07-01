@@ -12,9 +12,7 @@ export default function HeaderLogin(): React.ReactElement {
         <div className="container">
           <div id="logo" className="pull-left">
             <h1>
-              <a href="/">
-                NOTAI
-              </a>
+              <a href="/">NOTAI</a>
             </h1>
           </div>
           <nav id="nav-menu-container">

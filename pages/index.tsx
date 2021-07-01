@@ -11,9 +11,7 @@ export default function Home() {
         <div className="container">
           <div id="logo" className="pull-left">
             <h1>
-              <a href="/">
-                NOTAI
-              </a>
+              <a href="/">NOTAI</a>
             </h1>
           </div>
 
@@ -64,11 +62,9 @@ export default function Home() {
             </div>
           </div>
         </div>
-
       </section>
 
       <main id="main">
-
         <section id="more-features" className="section-bg">
           <div className="container">
             <div className="section-header">
@@ -86,7 +82,8 @@ export default function Home() {
                     <a href="">Create Payment</a>
                   </h4>
                   <p className="description">
-                    Send blockchain assets to anyone, set your own criteria for payment release, and expiry date for the payment.
+                    Send blockchain assets to anyone, set your own criteria for payment release, and
+                    expiry date for the payment.
                   </p>
                 </div>
               </div>
@@ -100,7 +97,8 @@ export default function Home() {
                     <a href="">Share Link With Recipient</a>
                   </h4>
                   <p className="description">
-                    The funds are transfered to a temporary escrow account. A link will be provided for you to share with the recipient.
+                    The funds are transfered to a temporary escrow account. A link will be provided
+                    for you to share with the recipient.
                   </p>
                 </div>
               </div>
@@ -114,7 +112,8 @@ export default function Home() {
                     <a href="">Payment Release Verification</a>
                   </h4>
                   <p className="description">
-                    The recipient visits the receive payment link to release the payment. Notai will verify the release condition on public APIs on the internet.
+                    The recipient visits the receive payment link to release the payment. Notai will
+                    verify the release condition on public APIs on the internet.
                   </p>
                 </div>
               </div>
@@ -128,7 +127,8 @@ export default function Home() {
                     <a href="">Payment Transacted</a>
                   </h4>
                   <p className="description">
-                    When the release criteria is fulfilled, the transaction will be made from the temporary escrow account to the recipients account.
+                    When the release criteria is fulfilled, the transaction will be made from the
+                    temporary escrow account to the recipients account.
                   </p>
                 </div>
               </div>
@@ -170,8 +170,8 @@ export default function Home() {
               <div className="col-lg-9 text-center text-lg-left">
                 <h3 className="cta-title">Open Source</h3>
                 <p className="cta-text">
-                  Notai is completely open source to maintain the highest level of transparency - and is part
-                  of our commitment to maintain trust and security.
+                  Notai is completely open source to maintain the highest level of transparency -
+                  and is part of our commitment to maintain trust and security.
                 </p>
               </div>
               <div className="col-lg-3 cta-btn-container text-center">
@@ -187,7 +187,7 @@ export default function Home() {
           </div>
         </section>
 
-              {/*
+        {/*
         <section id="features">
           <div className="container">
             <div className="row">
@@ -245,7 +245,7 @@ export default function Home() {
         </section>
 
               */}
-              
+
         <section id="contact">
           <div className="container">
             <div className="row wow fadeInUp">
@@ -253,8 +253,8 @@ export default function Home() {
                 <div className="contact-about">
                   <h3>NOTAI</h3>
                   <p>
-                    Notai aims to make payments escrows self managable and trustless by utilizing the
-                    programmable logic of smart contracts and immutability of blockchains.
+                    Notai aims to make payments escrows self managable and trustless by utilizing
+                    the programmable logic of smart contracts and immutability of blockchains.
                   </p>
                 </div>
               </div>

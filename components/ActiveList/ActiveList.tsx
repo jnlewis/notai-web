@@ -4,7 +4,13 @@ import PaymentService from '../../core/services/paymentService';
 import WalletService from './../../core/services/walletService';
 import { Escrow } from '../../core/interfaces/escrow';
 import LoadingBlock from '../LoadingBlock/LoadingBlock';
-import { isEarlierThan, isLaterThan, now, toShortDateFormat, unixTimeToDate } from '../../core/utils/dateTimeUtil';
+import {
+  isEarlierThan,
+  isLaterThan,
+  now,
+  toShortDateFormat,
+  unixTimeToDate,
+} from '../../core/utils/dateTimeUtil';
 import paymentService from '../../core/services/paymentService';
 
 export default function ActiveList() {
@@ -33,10 +39,9 @@ export default function ActiveList() {
           console.log(error);
         });
     }
-  }
+  };
 
   const cancelPayment = (escrow: Escrow) => {
-
     if (isEarlierThan(now(), unixTimeToDate(escrow.expiry))) {
       alert('You cannot cancel this payment because is not yet expired.');
       return;
@@ -44,16 +49,16 @@ export default function ActiveList() {
 
     setIsLoading(true);
     PaymentService.cancelEscrow(escrow.escrowAddress)
-    .then(() => {
-      setFetched(false);
-      retrieveList();
-    })
-    .catch((error) => {
-      setIsLoading(false);
-      console.log(error);
-      alert('Unable to cancel. Please try again.');
-    });
-  }
+      .then(() => {
+        setFetched(false);
+        retrieveList();
+      })
+      .catch((error) => {
+        setIsLoading(false);
+        console.log(error);
+        alert('Unable to cancel. Please try again.');
+      });
+  };
 
   const displayActive = (): ReactNode => {
     if (isLoading) {
@@ -78,7 +83,8 @@ export default function ActiveList() {
                   {item.amount} {item.asset}
                 </h6>
                 <p className="card-text">
-                  Status: {item.status}<br />
+                  Status: {item.status}
+                  <br />
                   Expires on: {toShortDateFormat(unixTimeToDate(item.expiry))}
                 </p>
               </a>
@@ -103,7 +109,11 @@ export default function ActiveList() {
                     <b>Matching:</b> {item.conditionOperator} {item.conditionValue}
                   </div>
                 </div>
-                <a href="#" className="card-link btn text-danger" onClick={() => cancelPayment(item)}>
+                <a
+                  href="#"
+                  className="card-link btn text-danger"
+                  onClick={() => cancelPayment(item)}
+                >
                   Cancel Payment
                 </a>
               </div>

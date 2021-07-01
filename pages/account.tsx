@@ -15,7 +15,7 @@ export default function Account() {
 
   useEffect(() => {
     if (!walletService.isLoggedIn()) {
-      router.push("/");
+      router.push('/');
     }
   });
 

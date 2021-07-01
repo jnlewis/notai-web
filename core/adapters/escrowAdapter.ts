@@ -5,7 +5,7 @@ class EscrowAdapter {
   convertToEscrowData(escrow: Escrow, createdTime: number) {
     if (!escrow) {
       return null;
-    };
+    }
 
     const result: EscrowData = {
       created_time: createdTime,
@@ -30,8 +30,8 @@ class EscrowAdapter {
   convertToEscrow(data: EscrowData) {
     if (!data) {
       return null;
-    };
-    
+    }
+
     const result: Escrow = {
       escrowAddress: data.escrow_address,
       creatorAddress: data.creator_address,
@@ -55,7 +55,7 @@ class EscrowAdapter {
     if (!data) {
       return null;
     }
-    
+
     const result: Escrow[] = [];
     data.forEach((item) => {
       result.push(this.convertToEscrow(item));

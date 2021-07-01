@@ -19,7 +19,7 @@ export default css.global`
     background-color: #168c50;
     border-color: #0b501d;
   }
-  
+
   a {
     color: #1dc8cd;
     cursor: pointer;

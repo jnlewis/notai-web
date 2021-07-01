@@ -48,7 +48,7 @@ class WalletService {
 
   isLoggedIn(): boolean {
     const userKey = localStorage.getItem('notaiUserKey');
-    return (userKey && userKey.trim() !== '');
+    return userKey && userKey.trim() !== '';
   }
 }
 
