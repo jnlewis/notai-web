@@ -2,7 +2,7 @@ import React, { useState, useEffect, ReactNode } from 'react';
 import styles from './ActiveList.style';
 import PaymentService from '../../core/services/paymentService';
 import WalletService from './../../core/services/walletService';
-import { Escrow } from '../../core/interfaces/escrow';
+import { Payment } from '../../core/interfaces/payment';
 import LoadingBlock from '../LoadingBlock/LoadingBlock';
 import {
   isEarlierThan,
@@ -12,50 +12,51 @@ import {
   unixTimeToDate,
 } from '../../core/utils/dateTimeUtil';
 import paymentService from '../../core/services/paymentService';
+import logger from '../../core/logger/logger';
 
 export default function ActiveList() {
   const [isLoading, setIsLoading] = useState(true);
   const [fetched, setFetched] = useState(false);
-  const [escrowList, setEscrowList] = useState<Escrow[]>([]);
+  const [paymentList, setPaymentList] = useState<Payment[]>([]);
 
   useEffect(() => {
     retrieveList();
-  }, [escrowList]);
+  }, [paymentList]);
 
   const retrieveList = () => {
     if (!fetched) {
       setIsLoading(true);
       const creatorAddress: string = WalletService.getLoggedInAddress();
 
-      PaymentService.getActiveEscrowByCreator(creatorAddress)
+      PaymentService.getActivePaymentByCreator(creatorAddress)
         .then((result) => {
           setIsLoading(false);
           setFetched(true);
-          setEscrowList(result);
+          setPaymentList(result);
         })
         .catch((error) => {
           setIsLoading(false);
           setFetched(true);
-          console.log(error);
+          logger.logError('ActiveList.getActivePaymentByCreator', error);
         });
     }
   };
 
-  const cancelPayment = (escrow: Escrow) => {
-    if (isEarlierThan(now(), unixTimeToDate(escrow.expiry))) {
+  const cancelPayment = (payment: Payment) => {
+    if (isEarlierThan(now(), unixTimeToDate(payment.expiry))) {
       alert('You cannot cancel this payment because is not yet expired.');
       return;
     }
 
     setIsLoading(true);
-    PaymentService.cancelEscrow(escrow.escrowAddress)
+    PaymentService.cancelPayment(payment.paymentAddress)
       .then(() => {
         setFetched(false);
         retrieveList();
       })
       .catch((error) => {
         setIsLoading(false);
-        console.log(error);
+        logger.logError('ActiveList.cancelPayment', error);
         alert('Unable to cancel. Please try again.');
       });
   };
@@ -65,8 +66,8 @@ export default function ActiveList() {
       return <LoadingBlock></LoadingBlock>;
     }
 
-    if (escrowList && escrowList.length > 0) {
-      return escrowList.map((item, index) => {
+    if (paymentList && paymentList.length > 0) {
+      return paymentList.map((item, index) => {
         return (
           <div className="card" key={index}>
             <div className="card-body">
@@ -96,7 +97,7 @@ export default function ActiveList() {
                     <b>Receiving address:</b> {item.recipientAddress}
                   </div>
                   <div>
-                    <b>Link:</b> {paymentService.getReceiveLink(item.escrowAddress)}
+                    <b>Link:</b> {paymentService.getReceiveLink(item.paymentAddress)}
                   </div>
                   <h5 className="mt-2">Release Condition</h5>
                   <div>

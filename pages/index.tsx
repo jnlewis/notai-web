@@ -112,7 +112,7 @@ export default function Home() {
                     <a href="">Payment Release Verification</a>
                   </h4>
                   <p className="description">
-                    The recipient visits the receive payment link to release the payment. Notai will
+                    The recipient visits the receive payment link to release the escrow. Notai will
                     verify the release condition on public APIs on the internet.
                   </p>
                 </div>
@@ -253,7 +253,7 @@ export default function Home() {
                 <div className="contact-about">
                   <h3>NOTAI</h3>
                   <p>
-                    Notai aims to make payments escrows self managable and trustless by utilizing
+                    Notai aims to make payments payments self managable and trustless by utilizing
                     the programmable logic of smart contracts and immutability of blockchains.
                   </p>
                 </div>

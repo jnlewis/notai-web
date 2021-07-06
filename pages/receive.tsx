@@ -1,20 +1,44 @@
 import styles from '../styles/pages/receive.style';
-import React from 'react';
+import React, { useState } from 'react';
 import PageHead from '../components/Global/PageHead';
 import HeaderLogin from '../components/HeaderLogin/HeaderLogin';
-import { Escrow } from '../core/interfaces/escrow';
+import { Payment } from '../core/interfaces/payment';
 import paymentService from '../core/services/paymentService';
+import MessageDialog from '../components/MessageDialog/MessageDialog';
 
 interface ReceiveProps {
-  payment?: Escrow;
+  payment?: Payment;
 }
 
-export default function Receive2({ payment }: ReceiveProps): React.ReactElement {
-  const releasePayment = (escrowAddress: string) => {
-    paymentService
-      .releaseEscrow(escrowAddress)
-      .then(() => {})
-      .catch((error) => {});
+export default function Receive({ payment }: ReceiveProps): React.ReactElement {
+
+  const [showMessageDialog, setShowMessageDialog] = useState(false);
+  const [messageDialogTitle, setMessageDialogTitle] = useState('');
+  const [messageDialogDesc, setMessageDialogDesc] = useState('');
+  const [isPaymentOpen, setIsPaymentOpen] = useState(true);
+
+  const releasePayment = (paymentAddress: string) => {
+    paymentService.releasePayment(paymentAddress)
+    .then((result) => {
+      if (result) {
+        showMessage('Release Successful', 'The payment is successful. Please allow a few minutes for transaction to take place.');
+        setIsPaymentOpen(false);
+      } else {
+        showMessage('Condition Not Met', 'The condition for the release of this payment is not yet met.');
+      }
+    })
+    .catch(() => {
+      showMessage(
+        'Release Failed',
+        'Release was not successful. Please try again or contact support.',
+      );
+    });
+  };
+
+  const showMessage = (title: string, message: string) => {
+    setMessageDialogTitle(title);
+    setMessageDialogDesc(message);
+    setShowMessageDialog(true);
   };
 
   if (!payment) {
@@ -86,22 +110,24 @@ export default function Receive2({ payment }: ReceiveProps): React.ReactElement 
                   <div>
                     <b>Matching:</b> {payment.conditionOperator} {payment.conditionValue}
                   </div>
-                  <div className="text-center mt-4">
-                    <a
-                      href="#"
-                      className="btn btn-primary"
-                      onClick={() => releasePayment(payment.escrowAddress)}
-                    >
-                      Claim Now
-                    </a>
-                  </div>
+                  {isPaymentOpen && (
+                    <div className="text-center mt-4">
+                      <a
+                        href="#"
+                        className="btn btn-primary"
+                        onClick={() => releasePayment(payment.paymentAddress)}
+                      >
+                        Claim Now
+                      </a>
+                    </div>
+                  )}
                 </div>
               </div>
             </div>
 
             <div className="row" style={{ marginTop: 20 + 'px' }}>
               <div className="col-lg-12 section-header">
-                <p className="section-description" style={{ maxWidth: 450 + 'px' }}>
+                <p className="section-description">
                   As transactions are carried out in a blockchain, please allow a few minutes for
                   the payment to be credited into your account.
                 </p>
@@ -110,21 +136,30 @@ export default function Receive2({ payment }: ReceiveProps): React.ReactElement 
           </div>
         </section>
       </div>
+
+      {showMessageDialog && (
+        <MessageDialog
+          show={true}
+          title={messageDialogTitle}
+          description={messageDialogDesc}
+          onClose={() => setShowMessageDialog(false)}
+        />
+      )}
     </>
   );
 }
 
 export async function getServerSideProps(context) {
-  let escrow: Escrow = null;
+  let payment: Payment = null;
 
-  const escrowAddress = context.query.a;
-  if (escrowAddress) {
-    escrow = await paymentService.getEscrow(escrowAddress);
+  const paymentAddress = context.query.a;
+  if (paymentAddress) {
+    payment = await paymentService.getPayment(paymentAddress);
   }
 
   return {
     props: {
-      payment: escrow,
+      payment: payment,
     },
   };
 }

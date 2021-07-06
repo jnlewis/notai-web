@@ -4,7 +4,7 @@ import React from 'react';
 export default function PageHead(): React.ReactElement {
   return (
     <Head>
-      <title>Notai - Decentralized Escrow Service</title>
+      <title>Notai - Decentralized Payment Service</title>
       <link rel="icon" href="/favicon.ico" />
       <link
         rel="stylesheet"

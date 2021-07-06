@@ -1,101 +1,82 @@
-import { EscrowData } from '../interfaces/escrowData';
+import { AppConfig } from '../../core/config/appConfig';
+
+export interface PaymentDbData {
+  _id?: string;
+  created_time?: number;
+  payment_address?: string;
+  creator_address?: string;
+  recipient_address?: string;
+  title?: string;
+  asset?: string;
+  amount?: number;
+  expiry?: number;
+  status?: string;
+  condition_api?: string;
+  condition_field?: string;
+  condition_field_type?: string;
+  condition_operator?: string;
+  condition_value?: string;
+}
 
 class DatabaseService {
-  private apiUrl: string = 'https://notai-b9fb.restdb.io';
-  private apiKey: string = '60d49fbc8f4ebf19b1cbe9d1';
+  private apiUrl: string = AppConfig.restDbApiUrl;
+  private apiKey: string = AppConfig.restDbApiKey;
 
-  async addEscrow(data: EscrowData) {
-    this.post(`${this.apiUrl}/rest/escrow`, data).then((response) => {
-      console.log(response);
-    });
+  async addPayment(data: PaymentDbData) {
+    await this.post(`${this.apiUrl}/rest/escrow`, data);
   }
 
-  async updateEscrowStatus(recordId: string, newStatus: string) {
-    this.patch(`${this.apiUrl}/rest/escrow/${recordId}`, { status: newStatus }).then((response) => {
-      console.log(response);
-    });
+  async updatePaymentStatus(recordId: string, newStatus: string) {
+    await this.patch(`${this.apiUrl}/rest/escrow/${recordId}`, { status: newStatus });
   }
 
-  async getEscrow(escrowAddress: string): Promise<EscrowData> {
-    return new Promise((resolve, reject) => {
-      this.get(`${this.apiUrl}/rest/escrow?q={"escrow_address": "${escrowAddress}"}`)
-        .then((data) => {
-          console.log(data);
-          if (data && data.length > 0) {
-            resolve(data[0]);
-          } else {
-            resolve(null);
-          }
-        })
-        .catch((error) => {
-          reject(error);
-        });
-    });
+  async getPayment(paymentAddress: string): Promise<PaymentDbData> {
+    let data = await this.get(`${this.apiUrl}/rest/escrow?q={"payment_address": "${paymentAddress}"}`);
+
+    if (data && data.length > 0) {
+      return data[0];
+    } else {
+      return null;
+    }
   }
 
-  async getEscrowsByCreatorWithStatus(
+  async getPaymentsByCreatorWithStatus(
     creatorAddress: string,
     status: string,
-  ): Promise<EscrowData[]> {
-    return new Promise((resolve, reject) => {
-      this.get(
-        `${this.apiUrl}/rest/escrow?q={"creator_address": "${creatorAddress}", "status": "${status}"}`,
-      )
-        .then((data) => {
-          resolve(data);
-        })
-        .catch((error) => {
-          reject(error);
-        });
-    });
+  ): Promise<PaymentDbData[]> {
+    const data = await this.get(
+      `${this.apiUrl}/rest/escrow?q={"creator_address": "${creatorAddress}", "status": "${status}"}`,
+    );
+    return data;
   }
 
-  async getEscrowsByCreatorWithoutStatus(
+  async getPaymentsByCreatorWithoutStatus(
     creatorAddress: string,
     status: string,
-  ): Promise<EscrowData[]> {
-    return new Promise((resolve, reject) => {
-      this.get(
-        `${this.apiUrl}/rest/escrow?q={"creator_address": "${creatorAddress}", "status": {"$not" : "${status}"}}`,
-      )
-        .then((data) => {
-          resolve(data);
-        })
-        .catch((error) => {
-          reject(error);
-        });
-    });
+  ): Promise<PaymentDbData[]> {
+    const data = await this.get(
+      `${this.apiUrl}/rest/escrow?q={"creator_address": "${creatorAddress}", "status": {"$not" : "${status}"}}`,
+    );
+    return data;
   }
 
   private async get(url: string): Promise<any> {
-    console.log(`get: ${url}`);
-
-    return new Promise((resolve, reject) => {
-      fetch(url, {
-        method: 'GET',
-        mode: 'cors', // no-cors, *cors, same-origin
-        cache: 'no-cache', // *default, no-cache, reload, force-cache, only-if-cached
-        credentials: 'same-origin', // include, *same-origin, omit
-        headers: {
-          'Content-Type': 'application/json',
-          'x-apikey': this.apiKey,
-        },
-        redirect: 'follow',
-      })
-        .then((response) => response.json())
-        .then((data) => {
-          resolve(data);
-        })
-        .catch((error) => {
-          reject(error);
-        });
+    const response = await fetch(url, {
+      method: 'GET',
+      mode: 'cors', // no-cors, *cors, same-origin
+      cache: 'no-cache', // *default, no-cache, reload, force-cache, only-if-cached
+      credentials: 'same-origin', // include, *same-origin, omit
+      headers: {
+        'Content-Type': 'application/json',
+        'x-apikey': this.apiKey,
+      },
+      redirect: 'follow',
     });
+    const data = await response.json();
+    return data;
   }
 
   private async post(url: string, data: unknown = {}) {
-    console.log(`post: ${url}`);
-    console.log(data);
-
     // Default options are marked with *
     const response = await fetch(url, {
       method: 'POST',
@@ -115,9 +96,6 @@ class DatabaseService {
   }
 
   private async patch(url: string, data: unknown = {}) {
-    console.log(`patch: ${url}`);
-    console.log(data);
-
     const response = await fetch(url, {
       method: 'PATCH',
       mode: 'cors', // no-cors, *cors, same-origin

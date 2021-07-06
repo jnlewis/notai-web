@@ -2,42 +2,43 @@ import React, { useState, useEffect, ReactNode } from 'react';
 import styles from './HistoryList.style';
 import PaymentService from '../../core/services/paymentService';
 import WalletService from '../../core/services/walletService';
-import { Escrow } from '../../core/interfaces/escrow';
+import { Payment } from '../../core/interfaces/payment';
 import LoadingBlock from '../LoadingBlock/LoadingBlock';
 import { toShortDateFormat, unixTimeToDate } from '../../core/utils/dateTimeUtil';
 import paymentService from '../../core/services/paymentService';
+import logger from '../../core/logger/logger';
 
 export default function HistoryList() {
   const [isLoading, setIsLoading] = useState(true);
   const [fetched, setFetched] = useState(false);
-  const [escrowList, setEscrowList] = useState<Escrow[]>([]);
+  const [paymentList, setPaymentList] = useState<Payment[]>([]);
 
   useEffect(() => {
     if (!fetched) {
       setIsLoading(true);
       const creatorAddress: string = WalletService.getLoggedInAddress();
 
-      PaymentService.getInactiveEscrowByCreator(creatorAddress)
+      PaymentService.getInactivePaymentByCreator(creatorAddress)
         .then((result) => {
           setIsLoading(false);
           setFetched(true);
-          setEscrowList(result);
+          setPaymentList(result);
         })
         .catch((error) => {
           setIsLoading(false);
           setFetched(true);
-          console.log(error);
+          logger.logError('HistoryList.getInactivePaymentByCreator', error);
         });
     }
-  }, [escrowList]);
+  }, [paymentList]);
 
   const displayInactive = (): ReactNode => {
     if (isLoading) {
       return <LoadingBlock></LoadingBlock>;
     }
 
-    if (escrowList && escrowList.length > 0) {
-      return escrowList.map((item, index) => {
+    if (paymentList && paymentList.length > 0) {
+      return paymentList.map((item, index) => {
         return (
           <div className="card" key={index}>
             <div className="card-body">
@@ -54,7 +55,7 @@ export default function HistoryList() {
                   {item.amount} {item.asset}
                 </h6>
                 <p className="card-text">
-                  Status: {item.status}
+                  Status: {item.status}<br />
                   Expires on: {toShortDateFormat(unixTimeToDate(item.expiry))}
                 </p>
               </a>
@@ -66,7 +67,7 @@ export default function HistoryList() {
                     <b>Receiving address:</b> {item.recipientAddress}
                   </div>
                   <div>
-                    <b>Link:</b> {paymentService.getReceiveLink(item.escrowAddress)}
+                    <b>Link:</b> {paymentService.getReceiveLink(item.paymentAddress)}
                   </div>
                   <h5 className="mt-2">Release Condition</h5>
                   <div>

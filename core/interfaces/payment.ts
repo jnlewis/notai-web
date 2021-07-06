@@ -1,5 +1,5 @@
-export interface Escrow {
-  escrowAddress: string;
+export interface Payment {
+  paymentAddress: string;
   creatorAddress: string;
   recipientAddress: string;
   title: string;

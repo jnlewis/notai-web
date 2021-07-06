@@ -4,7 +4,7 @@
 
 # NOTAI
 
-Decentralized escrow payment service built on the NEO blockchain.
+Decentralized payment payment service built on the NEO blockchain.
 
 ## Main Features
 
@@ -20,8 +20,10 @@ Decentralized escrow payment service built on the NEO blockchain.
 <a href="https://notai.vercel.app" target="_blank">https://notai.vercel.app</a>
 
 ## Deployment
+The frontend web is hosted on Vercel and deployed through Vercel Github integration.
+Dashboard and pipeline: https://vercel.com/jnlewis/notai-web
 
-Notai's frontend web is currently hosted on Vercel (https://vercel.com/docs/platform/deployments).
+Any commits to main branch is automatically deployed.
 
 ## License
 

@@ -6,6 +6,9 @@ import { useRouter } from 'next/router';
 import PageHead from '../components/Global/PageHead';
 import HeaderLogin from '../components/HeaderLogin/HeaderLogin';
 import walletService from '../core/services/walletService';
+import PaymentService from '../core/services/paymentService';
+import { Payment } from '../core/interfaces/payment';
+import smartContractService from '../core/services/smartContractService';
 
 export default function Login(): React.ReactElement {
   const router = useRouter();

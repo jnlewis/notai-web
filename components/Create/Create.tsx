@@ -8,7 +8,7 @@ import DatePicker from 'react-datepicker';
 import 'react-datepicker/dist/react-datepicker.css';
 import PaymentService from '../../core/services/paymentService';
 import WalletService from './../../core/services/walletService';
-import { Escrow } from '../../core/interfaces/escrow';
+import { Payment } from '../../core/interfaces/payment';
 import { releaseConditionPresets } from '../../core/config/releaseConditionPresets';
 import { ConditionPreset } from '../../core/interfaces/conditionPreset';
 import paymentService from '../../core/services/paymentService';
@@ -62,8 +62,6 @@ export default function Create() {
       return;
     }
 
-    // TODO: check date must be at least 1 month ahead
-
     // Show confirm dialog
     setShowTransactionDialog(true);
   };
@@ -74,11 +72,11 @@ export default function Create() {
   const handleTxConfirm = () => {
     setShowTransactionDialog(false);
 
-    const escrowAddress: string = PaymentService.generateEscrowAddress();
+    const paymentAddress: string = PaymentService.generatePaymentAddress();
     const creatorAddress: string = WalletService.getLoggedInAddress();
 
-    const escrow: Escrow = {
-      escrowAddress: escrowAddress,
+    const payment: Payment = {
+      paymentAddress: paymentAddress,
       creatorAddress: creatorAddress,
       recipientAddress: inputToAddress,
       title: inputTitle,
@@ -93,13 +91,12 @@ export default function Create() {
       conditionValue: inputConditionValue,
     };
 
-    // console.log(escrow);
-    PaymentService.createEscrow(escrow)
+    PaymentService.createPayment(payment)
       .then(() => {
         showMessage(
           'Submission Successful',
           `Share the following link to claim: ${paymentService.getReceiveLink(
-            escrow.escrowAddress,
+            payment.paymentAddress,
           )}`,
         );
 
@@ -147,7 +144,7 @@ export default function Create() {
                 value={inputTitle}
                 onInput={(e) => setInputTitle((e.target as HTMLInputElement).value)}
                 placeholder="Eg: New years gift"
-                maxLength={28}
+                maxLength={200}
               />
             </div>
             <div className="form-group">
@@ -171,6 +168,8 @@ export default function Create() {
                     onChange={(e) => setInputAsset(e.target.value)}
                   >
                     <option value="NOTAI">NOTAI</option>
+                    <option value="GAS">GAS</option>
+                    <option value="NEO">NEO</option>
                   </select>
                 </div>
               </div>
@@ -222,7 +221,7 @@ export default function Create() {
                   value={inputConditionApi}
                   onInput={(e) => setInputConditionApi((e.target as HTMLInputElement).value)}
                   placeholder="Eg: https://..."
-                  maxLength={28}
+                  maxLength={500}
                 />
               </div>
               <div className="row">
@@ -239,7 +238,7 @@ export default function Create() {
                       value={inputConditionField}
                       onInput={(e) => setInputConditionField((e.target as HTMLInputElement).value)}
                       placeholder="Eg: $.parent.child"
-                      maxLength={28}
+                      maxLength={500}
                     />
                   </div>
                 </div>
@@ -283,7 +282,7 @@ export default function Create() {
                       value={inputConditionValue}
                       onInput={(e) => setInputConditionValue((e.target as HTMLInputElement).value)}
                       placeholder="Eg: value"
-                      maxLength={28}
+                      maxLength={500}
                     />
                   </div>
                 </div>
