@@ -26,5 +26,5 @@ export const TestNetConfig: Config = {
 };
 
 export const AppConfig = {
-  env: LocalConfig
+  env: TestNetConfig
 };
