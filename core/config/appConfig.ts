@@ -19,7 +19,7 @@ export const LocalConfig: Config = {
 
 export const TestNetConfig: Config = {
   environment: 'testnet',
-  rpcEndpoint: 'http://seed3t.neo.org:20332',
+  rpcEndpoint: 'https://testnet1.neo.coz.io:443',
   networkMagic: 844378958,
   contractScriptHash: '0x52097e39b603e8c3765f57dd0db894c99988efd1',
   contractKey: 'd59cb956a141b9473f36ac8f5604a46352663a0874af5f42e726cffdbeb15b0d',
