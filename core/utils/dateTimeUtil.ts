@@ -39,3 +39,7 @@ export function isLaterThan(date: Date, compare: Date): boolean {
 export function now(): Date {
   return new Date();
 }
+
+export function addDays(date: Date, days: number): Date {
+  return new Date(date.setDate(date.getDate() + days));
+}
