@@ -126,6 +126,11 @@ export default function Create() {
       conditionValue: inputConditionValue,
     };
 
+    showMessage(
+      'Please Wait',
+      `Creating payment...`,
+    );
+
     PaymentService.createPayment(payment)
       .then(() => {
         showMessage(

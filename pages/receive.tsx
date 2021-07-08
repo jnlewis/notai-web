@@ -18,6 +18,12 @@ export default function Receive({ payment }: ReceiveProps): React.ReactElement {
   const [isPaymentOpen, setIsPaymentOpen] = useState(true);
 
   const releasePayment = (paymentAddress: string) => {
+
+    showMessage(
+      'Please Wait',
+      'Releasing payment...',
+    );
+
     paymentService
       .releasePayment(paymentAddress)
       .then((result) => {
