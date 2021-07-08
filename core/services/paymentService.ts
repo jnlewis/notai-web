@@ -1,8 +1,6 @@
 import { tx, wallet, settings } from '@cityofzion/neon-core';
-import paymentAdapter from '../adapters/paymentAdapter';
 import { Payment } from '../interfaces/payment';
 import { getCurrentDomain } from '../utils/environmentUtil';
-import databaseService, { PaymentDbData } from './databaseService';
 import jsonpath from 'jsonpath';
 import logger from '../utils/logger';
 import smartContractService from './smartContractService';
