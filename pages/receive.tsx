@@ -5,6 +5,7 @@ import HeaderLogin from '../components/HeaderLogin/HeaderLogin';
 import { Payment } from '../core/interfaces/payment';
 import paymentService from '../core/services/paymentService';
 import MessageDialog from '../components/MessageDialog/MessageDialog';
+import { toShortDateFormat } from '../core/utils/dateTimeUtil';
 
 interface ReceiveProps {
   payment?: Payment;
@@ -95,7 +96,7 @@ export default function Receive({ payment }: ReceiveProps): React.ReactElement {
                     <b>To:</b> {payment.recipientAddress}
                   </div>
                   <div>
-                    <b>Expires on </b> {payment.expiry}
+                    <b>Expires on </b> {toShortDateFormat(new Date(payment.expiry))}
                   </div>
 
                   <hr className="hr-dotted" />

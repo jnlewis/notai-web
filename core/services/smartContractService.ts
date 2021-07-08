@@ -1,31 +1,19 @@
 import { CONST, rpc, sc, wallet, tx, u } from '@cityofzion/neon-core';
+import { AppConfig } from '../config/appConfig';
 import { Payment } from '../interfaces/payment';
-import logger from '../logger/logger';
+import logger from '../utils/logger';
 import { SmartContract } from './../neonjsExperimental';
 
 class SmartContractService {
 
-  /*
-  RPC Endpoint List:
-  http://seed1t.neo.org:20332
-  http://seed2t.neo.org:20332
-  http://seed3t.neo.org:20332
-  http://seed4t.neo.org:20332
-  http://seed5t.neo.org:20332
-  */
-
-  // TESTNET
-  //private rpcEndpoint: string = 'http://seed1t.neo.org:20332';
-
-  // LOCAL
-  private rpcEndpoint: string = 'http://127.0.0.1:50012';
-  private networkMagic: number = 2392412620;
-  private contractScriptHash: string = '0xf5da71ea19b90e7e606aca5f5c67fc8e088bacaf';
-  private contractKey = '5d5fb3b38fc2c2846ea1cec80f14ad02d38a78318caca22b7b81c09c35928802';
+  private rpcEndpoint: string = AppConfig.env.rpcEndpoint;
+  private networkMagic: number = AppConfig.env.networkMagic;
+  private contractScriptHash: string = AppConfig.env.contractScriptHash;
+  private contractKey = AppConfig.env.contractKey;
 
   public Assets = {
     NEO: 'NEO',
-    GAS: 'GAS,'
+    GAS: 'GAS',
   }
   
   private convertStringToHex = (value: string) => u.str2hexstring(value);
@@ -67,6 +55,8 @@ class SmartContractService {
         sc.ContractParam.string(payment.conditionValue),
     ]);
 
+    logger.logInfo('smartContractService.createPayment', 'Contract response', response);
+  
     return true;
   }
 
@@ -84,6 +74,8 @@ class SmartContractService {
         sc.ContractParam.hash160(paymentAddress),
     ]);
 
+    logger.logInfo('smartContractService.cancelPayment', 'Contract response', response);
+  
     return true;
   }
 
@@ -101,6 +93,8 @@ class SmartContractService {
         sc.ContractParam.hash160(paymentAddress),
     ]);
 
+    logger.logInfo('smartContractService.releasePayment', 'Contract response', response);
+  
     return true;
   }
 
@@ -123,6 +117,8 @@ class SmartContractService {
   }
 
   async getPayment(paymentAddress: string): Promise<Payment> {
+    logger.logInfo('smartContractService.getPayment', 'begin');
+
     const rpcClient = new rpc.RPCClient(this.rpcEndpoint);
     const response = await rpcClient.invokeFunction(
       this.contractScriptHash,
@@ -130,12 +126,16 @@ class SmartContractService {
       [sc.ContractParam.hash160(paymentAddress)]
     );
 
+    logger.logInfo('smartContractService.getPayment', 'Contract response', response);
+  
     const result: Payment = this.mapResponseToPayment(response.stack[0]);
 
     return result;
   }
 
   async getPaymentsByCreator(creatorAddress: string): Promise<Payment[]> {
+    logger.logInfo('smartContractService.getPaymentsByCreator', 'begin');
+
     const rpcClient = new rpc.RPCClient(this.rpcEndpoint);
     const response = await rpcClient.invokeFunction(
       this.contractScriptHash,
@@ -143,6 +143,8 @@ class SmartContractService {
       [sc.ContractParam.hash160(creatorAddress)]
     );
 
+    logger.logInfo('smartContractService.getPaymentsByCreator', 'Contract response', response);
+  
     const result: Payment[] = [];
     
     // @ts-ignore
@@ -154,7 +156,7 @@ class SmartContractService {
   }
 
   async getBalance(asset: string, address: string): Promise<number> {
-    logger.logInfo('smartContractService.getGasBalance', 'Begin');
+    logger.logInfo('smartContractService.getBalance', 'Begin');
 
     const assetHash = this.getAssetHash(asset);
     const rpcClient = new rpc.RPCClient(this.rpcEndpoint);
@@ -163,9 +165,11 @@ class SmartContractService {
       'balanceOf',
       [sc.ContractParam.hash160(address)]
     );
+
+    logger.logInfo('smartContractService.getBalance', 'Contract response', response);
   
     if (response.state !== "HALT") {
-      logger.logError('smartContractService.getGasBalance', response.exception);
+      logger.logError('smartContractService.getBalance', response.exception);
       throw new Error(response.exception);
     }
     

@@ -12,7 +12,7 @@ import {
   unixTimeToDate,
 } from '../../core/utils/dateTimeUtil';
 import paymentService from '../../core/services/paymentService';
-import logger from '../../core/logger/logger';
+import logger from '../../core/utils/logger';
 
 export default function ActiveList() {
   const [isLoading, setIsLoading] = useState(true);
@@ -20,26 +20,26 @@ export default function ActiveList() {
   const [paymentList, setPaymentList] = useState<Payment[]>([]);
 
   useEffect(() => {
-    retrieveList();
-  }, [paymentList]);
+    if (!fetched) {
+      retrieveList();
+    }
+  }, [paymentList, fetched]);
 
   const retrieveList = () => {
-    if (!fetched) {
-      setIsLoading(true);
-      const creatorAddress: string = WalletService.getLoggedInAddress();
+    setIsLoading(true);
+    const creatorAddress: string = WalletService.getLoggedInAddress();
 
-      PaymentService.getActivePaymentByCreator(creatorAddress)
-        .then((result) => {
-          setIsLoading(false);
-          setFetched(true);
-          setPaymentList(result);
-        })
-        .catch((error) => {
-          setIsLoading(false);
-          setFetched(true);
-          logger.logError('ActiveList.getActivePaymentByCreator', error);
-        });
-    }
+    PaymentService.getActivePaymentByCreator(creatorAddress)
+      .then((result) => {
+        setIsLoading(false);
+        setFetched(true);
+        setPaymentList(result);
+      })
+      .catch((error) => {
+        setIsLoading(false);
+        setFetched(true);
+        logger.logError('ActiveList.getActivePaymentByCreator', error);
+      });
   };
 
   const cancelPayment = (payment: Payment) => {
@@ -51,7 +51,6 @@ export default function ActiveList() {
     setIsLoading(true);
     PaymentService.cancelPayment(payment.paymentAddress)
       .then(() => {
-        setFetched(false);
         retrieveList();
       })
       .catch((error) => {

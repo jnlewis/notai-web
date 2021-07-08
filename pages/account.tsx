@@ -11,7 +11,7 @@ import walletService from '../core/services/walletService';
 export default function Account() {
   const router = useRouter();
 
-  const [selectedMenu, setSelectedMenu] = useState('create');
+  const [selectedMenu, setSelectedMenu] = useState('active');
 
   useEffect(() => {
     if (!walletService.isLoggedIn()) {
@@ -34,20 +34,6 @@ export default function Account() {
             <li className="nav-item">
               <a
                 className="nav-link active"
-                id="new-tab"
-                data-toggle="tab"
-                href="#new"
-                role="tab"
-                aria-controls="new"
-                aria-selected="true"
-                onClick={() => setSelectedMenu('create')}
-              >
-                New Payment
-              </a>
-            </li>
-            <li className="nav-item">
-              <a
-                className="nav-link"
                 id="active-tab"
                 data-toggle="tab"
                 href="#active"
@@ -57,6 +43,20 @@ export default function Account() {
                 onClick={() => setSelectedMenu('active')}
               >
                 Active Payments
+              </a>
+            </li>
+            <li className="nav-item">
+              <a
+                className="nav-link"
+                id="new-tab"
+                data-toggle="tab"
+                href="#new"
+                role="tab"
+                aria-controls="new"
+                aria-selected="false"
+                onClick={() => setSelectedMenu('create')}
+              >
+                Create New Payment
               </a>
             </li>
             <li className="nav-item">

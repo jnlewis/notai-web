@@ -187,13 +187,12 @@ export default function Home() {
           </div>
         </section>
 
-        {/*
         <section id="features">
           <div className="container">
             <div className="row">
               <div className="col-lg-12">
                 <div className="section-header">
-                  <h3 className="section-title">Example Use Cases</h3>
+                  <h3 className="section-title">Use Cases</h3>
                   <span className="section-divider"></span>
                   <p className="section-description">Here are some things you can do with Notai.</p>
                 </div>
@@ -205,7 +204,7 @@ export default function Home() {
                     <div className="icon">
                       <i aria-hidden className="fas fa-money-check"></i>
                     </div>
-                    <h4 className="title">Scheduled Payments</h4>
+                    <h4 className="title">Scheduled Payouts</h4>
                     <p className="description">
                       Schedule payments that a recipient can claim at a specified date.
                     </p>
@@ -214,27 +213,27 @@ export default function Home() {
                     <div className="icon">
                       <i aria-hidden className="fas fa-umbrella-beach"></i>
                     </div>
-                    <h4 className="title">Safe Purchase</h4>
+                    <h4 className="title">Payment on Delivery</h4>
                     <p className="description">
                       Safely purchase any assets verifiable on the internet.
                     </p>
                   </div>
                   <div className="col-lg-6 col-md-6 box">
                     <div className="icon">
-                      <i aria-hidden className="fas fa-hand-holding-usd"></i>
+                      <i aria-hidden className="fas fa-funnel-dollar"></i>
                     </div>
-                    <h4 className="title">Betting</h4>
+                    <h4 className="title">Retirement Savings</h4>
                     <p className="description">
+                      Create steady withdrawals at specified intervals to make sure your money lasts
+                      while giving you peace of mind.
                     </p>
                   </div>
                   <div className="col-lg-6 col-md-6 box">
                     <div className="icon">
-                      <i aria-hidden className="fas fa-funnel-dollar"></i>
+                      <i aria-hidden className="fas fa-hand-holding-usd"></i>
                     </div>
-                    <h4 className="title">Regular Withdrawals</h4>
+                    <h4 className="title">Escrow Agreement</h4>
                     <p className="description">
-                      Create steady withdrawals at specified intervals to make sure your money lasts
-                      while giving you peace of mind.
                     </p>
                   </div>
                 </div>
@@ -243,8 +242,6 @@ export default function Home() {
             </div>
           </div>
         </section>
-
-              */}
 
         <section id="contact">
           <div className="container">

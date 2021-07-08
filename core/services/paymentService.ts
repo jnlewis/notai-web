@@ -4,7 +4,9 @@ import { Payment } from '../interfaces/payment';
 import { getCurrentDomain } from '../utils/environmentUtil';
 import databaseService, { PaymentDbData } from './databaseService';
 import jsonpath from 'jsonpath';
-import logger from '../logger/logger';
+import logger from '../utils/logger';
+import smartContractService from './smartContractService';
+import walletService from './walletService';
 
 class PaymentService {
   getReceiveLink(paymentAddress: string) {
@@ -16,39 +18,39 @@ class PaymentService {
     return acct.address;
   }
 
-  async createPayment(payment: Payment): Promise<boolean> {
-    // TODO: Call blockchainService
-
-    const dbPayment: PaymentDbData = paymentAdapter.convertToPaymentDbData(payment, Date.now());
-    await databaseService.addPayment(dbPayment);
-    return true;
-  }
-
   async getPayment(paymentAddress: string): Promise<Payment> {
-    const data = await databaseService.getPayment(paymentAddress);
-    const result = paymentAdapter.convertToPayment(data);
+    const result = await smartContractService.getPayment(paymentAddress);
     return result;
   }
 
   async getActivePaymentByCreator(creatorAddress: string): Promise<Payment[]> {
-    const data = await databaseService.getPaymentsByCreatorWithStatus(creatorAddress, 'open');
-    const result = paymentAdapter.convertToPaymentList(data);
+    const payments = await smartContractService.getPaymentsByCreator(creatorAddress);
+    const result = payments.filter(item => item.status === 'open');
     return result;
   }
 
   async getInactivePaymentByCreator(creatorAddress: string): Promise<Payment[]> {
-    const data = await databaseService.getPaymentsByCreatorWithoutStatus(creatorAddress, 'open');
-    const result = paymentAdapter.convertToPaymentList(data);
+    const payments = await smartContractService.getPaymentsByCreator(creatorAddress);
+    const result = payments.filter(item => item.status !== 'open');
     return result;
   }
 
-  async cancelPayment(paymentAddress: string): Promise<void> {
-    const data = await databaseService.getPayment(paymentAddress);
-    await this.updatePaymentStatus(data._id, 'cancelled');
+  async createPayment(payment: Payment): Promise<boolean> {
+    await smartContractService.createPayment(payment, walletService.getLoggedInKey());
+    return true;
+  }
+
+  async cancelPayment(paymentAddress: string): Promise<boolean> {
+    const payment = await this.getPayment(paymentAddress);
+    if (payment.status !== 'open') {
+      logger.logWarning('paymentService.releasePayment', 'Payment status is not open.');
+      return false;
+    }
+
+    await smartContractService.releasePayment(payment.paymentAddress);
   }
 
   async releasePayment(paymentAddress: string): Promise<boolean> {
-
     const payment = await this.getPayment(paymentAddress);
     if (payment.status !== 'open') {
       logger.logWarning('paymentService.releasePayment', 'Payment status is not open.');
@@ -56,17 +58,14 @@ class PaymentService {
     }
 
     const isConditionMet = await this.checkReleaseCondition(payment);
-    if (isConditionMet) {
-      await this.updatePaymentStatus(payment.paymentAddress, 'released');
+    if (!isConditionMet) {
+      logger.logWarning('paymentService.releasePayment', 'Payment condition not fulfilled.');
+      return false;
     }
 
-    return isConditionMet;
-  }
+    await smartContractService.releasePayment(payment.paymentAddress);
 
-  private async updatePaymentStatus(id: string, newStatus: string) {
-    // TODO: Call blockchainService
-
-    databaseService.updatePaymentStatus(id, newStatus);
+    return true;
   }
 
   private async checkReleaseCondition(payment: Payment): Promise<boolean> {

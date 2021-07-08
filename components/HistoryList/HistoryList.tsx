@@ -6,7 +6,7 @@ import { Payment } from '../../core/interfaces/payment';
 import LoadingBlock from '../LoadingBlock/LoadingBlock';
 import { toShortDateFormat, unixTimeToDate } from '../../core/utils/dateTimeUtil';
 import paymentService from '../../core/services/paymentService';
-import logger from '../../core/logger/logger';
+import logger from '../../core/utils/logger';
 
 export default function HistoryList() {
   const [isLoading, setIsLoading] = useState(true);

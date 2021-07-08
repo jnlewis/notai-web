@@ -12,6 +12,10 @@ import { Payment } from '../../core/interfaces/payment';
 import { releaseConditionPresets } from '../../core/config/releaseConditionPresets';
 import { ConditionPreset } from '../../core/interfaces/conditionPreset';
 import paymentService from '../../core/services/paymentService';
+import smartContractService from '../../core/services/smartContractService';
+import walletService from './../../core/services/walletService';
+import logger from '../../core/utils/logger';
+import { addDays } from '../../core/utils/dateTimeUtil';
 
 export default function Create() {
   const [showTransactionDialog, setShowTransactionDialog] = useState(false);
@@ -19,18 +23,40 @@ export default function Create() {
   const [showMessageDialog, setShowMessageDialog] = useState(false);
   const [messageDialogTitle, setMessageDialogTitle] = useState('');
   const [messageDialogDesc, setMessageDialogDesc] = useState('');
+  
+  const [balance, setBalance] = useState('0.00');
 
   // User input states
   const [inputTitle, setInputTitle] = useState('');
   const [inputToAddress, setInputToAddress] = useState('');
-  const [inputAsset, setInputAsset] = useState('NOTAI');
+  const [inputAsset, setInputAsset] = useState('');
   const [inputAmount, setInputAmount] = useState(0);
-  const [inputExpiryDate, setInputExpiryDate] = useState(new Date());
+  const [inputExpiryDate, setInputExpiryDate] = useState(addDays(new Date(), 30));
   const [inputConditionApi, setInputConditionApi] = useState('');
   const [inputConditionField, setInputConditionField] = useState('');
   const [inputConditionFieldType, setInputConditionFieldType] = useState('text');
   const [inputConditionOperator, setInputConditionOperator] = useState('=');
   const [inputConditionValue, setInputConditionValue] = useState('');
+
+  const selectAsset = (selected: string) => {
+    setInputAsset(selected);
+
+    if (!selected) {
+      setBalance('0.00');
+      return;
+    }
+
+    setBalance("Retrieving...");
+    smartContractService.getBalance(selected, walletService.getLoggedInAddress())
+    .then(balance => {
+      setBalance(balance.toFixed(2).toString());
+    })
+    .catch(error => {
+      setBalance('Failed to retrieve');
+      logger.logError('Create.selectAsset', error);
+    });
+
+  }
 
   const onPresetSelected = (preset: ConditionPreset) => {
     setShowPreset(false);
@@ -56,9 +82,15 @@ export default function Create() {
       inputConditionField.trim() === '' ||
       inputConditionFieldType.trim() === '' ||
       inputConditionOperator.trim() === '' ||
-      inputConditionValue.trim() === ''
+      inputConditionValue.trim() === '' ||
+      Number(balance) === NaN
     ) {
       showMessage('Required Fields', `Please enter all fields.`);
+      return;
+    }
+
+    if (inputAmount > Number(balance)) {
+      showMessage('Insufficient Balance', `You do not have enough ${inputAsset} balance to make the payment.`);
       return;
     }
 
@@ -103,14 +135,15 @@ export default function Create() {
         // Reset fields
         setInputTitle('');
         setInputToAddress('');
-        setInputAsset('NOTAI');
+        setInputAsset('');
         setInputAmount(0);
-        setInputExpiryDate(new Date());
+        setInputExpiryDate(addDays(new Date(), 30));
         setInputConditionApi('');
         setInputConditionField('');
         setInputConditionFieldType('text');
         setInputConditionOperator('=');
         setInputConditionValue('');
+        setBalance('0.00')
       })
       .catch(() => {
         showMessage(
@@ -138,7 +171,7 @@ export default function Create() {
             <b>Payment Details</b>
 
             <div className="form-group">
-              <label>Name</label>
+              <label>Name (Optional)</label>
               <input
                 className="form-control"
                 value={inputTitle}
@@ -165,14 +198,28 @@ export default function Create() {
                   <select
                     value={inputAsset}
                     className="form-control"
-                    onChange={(e) => setInputAsset(e.target.value)}
+                    onChange={(e) => selectAsset(e.target.value)}
                   >
-                    <option value="NOTAI">NOTAI</option>
-                    <option value="GAS">GAS</option>
-                    <option value="NEO">NEO</option>
+                    <option value="">Select...</option>
+                    <option value={smartContractService.Assets.GAS}>GAS</option>
+                    <option value={smartContractService.Assets.NEO}>NEO</option>
                   </select>
                 </div>
               </div>
+              <div className="col-6">
+                <div className="form-group">
+                  <label>Balance</label>
+                  <input
+                    className="form-control-plaintext"
+                    type="text"
+                    value={balance}
+                    readOnly
+                  />
+                </div>
+              </div>
+            </div>
+
+            <div className="row">
               <div className="col-6">
                 <div className="form-group">
                   <label>Amount</label>
@@ -187,18 +234,20 @@ export default function Create() {
                   />
                 </div>
               </div>
-            </div>
-
-            <div className="form-group">
-              <label>Expiry Date</label>
-              <div>
-                <DatePicker
-                  className="form-control"
-                  selected={inputExpiryDate}
-                  onChange={(date) => setInputExpiryDate(date)}
-                />
+              <div className="col-6">
+                <div className="form-group">
+                  <label>Expiry Date</label>
+                  <div>
+                    <DatePicker
+                      className="form-control"
+                      selected={inputExpiryDate}
+                      onChange={(date) => setInputExpiryDate(date)}
+                    />
+                  </div>
+                </div>
               </div>
             </div>
+            
           </div>
         </div>
 
@@ -304,7 +353,7 @@ export default function Create() {
         <ConfirmDialog
           show={true}
           title={`Confirm Submission`}
-          description={`You are about to create a conditional payment of ${inputAmount} NOTAI. Confirm submission?`}
+          description={`You are about to create a conditional payment of ${inputAmount} ${inputAsset}, with a service fee of 0.5 GAS. Confirm submission?`}
           onCancel={handleTxCancel}
           onConfirm={handleTxConfirm}
         />
