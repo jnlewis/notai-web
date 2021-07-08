@@ -2,16 +2,16 @@
     <img src="https://github.com/jnlewis/notai-web/raw/main/docs/images/logo.png" width="128" height="128" alt="Notai">
 </p>
 
-# NOTAI
-
-**Related repositories:**
+#### Related repositories
 
 - Frontend Web (this): https://github.com/jnlewis/notai-web
 - Blockchain Smart Contract: https://github.com/jnlewis/notai-smart-contract
 
+# NOTAI
+
 #### Send Payments With Condition
 
-Notai lets you send payments to anyone with your own condition. Your payment is only released when certain criteria on the internet is fulfilled. Notai runs as a decentralized service on a blockchain, which means your payment is secured and resilient to data loss. More importantly, your decision is executed exactly the you want it without possible interference. In other words, your decision is final.
+Notai lets you send payments to anyone with your own condition. Your payment is only released when certain criteria on the internet is fulfilled. Notai runs as a decentralized service on a blockchain, which means your payment is secured and resilient to data loss. More importantly, your decision is executed exactly the you want it without possible interference.
 
 The service introduces the ability for an individual on the blockchain to create an escrow account and transfer funds to it, which can be designated to a recipient account. The recipient can then release these funds when a particular condition is met. The condition would be specified by the sender along with a payment expiry date. If the condition is not fulfiled by the time of expiry, the sender can cancel the payment whereby the funds will be transferred back to the sender account.
 
@@ -45,19 +45,19 @@ The service introduces the ability for an individual on the blockchain to create
 7.  When release condition is fulfilled, the assets in the temporary escrow is transferred to the recipient.
 8.  In the event that payment expiry specified in Step 2 has elapsed, the sender can cancel the payment where the assets will be transferred back to the sender address.
 
-**Service Fee** A service fee of 0.5 GAS is applied for each payment created. This fee will be transferred to the Smart Contract. Part of this fee will be used to pay for the Oracle service used to verify the payment release condition when the recipient releases a payment.
+**Service Fee**: A service fee of 0.5 GAS is applied for each payment created. This fee will be transferred to the Smart Contract. Part of this fee will be used to pay for the Oracle service used to verify the payment release condition when the recipient releases a payment.
 
 ## Technologies
 
 **Frontend Application (UX)**
 
-- The application is developed in TypeScript with ReactJs and NextJs framework.
+- The front end web application is developed in TypeScript with ReactJs and NextJs framework.
 
 **Blockchain Smart Contract**
 
-- The blockchain network used is <a href="https://www.neo.org/" target="_blank">NEO</a>.
-- **Neo VM**: Decentralized storage and application execution.
-- **Neo Oracle Service**: Allows data access to any API on the internet from the blockchain
+- The smart contract is developed in C# and deployed on <a href="https://www.neo.org/" target="_blank">NEO blockchain</a>.
+- **Neo VM**: Used for decentralized storage and smart contract execution.
+- **Neo Oracle Service**: Used to access any API on the internet from the blockchain
   (https://docs.neo.org/docs/en-us/advanced/oracle.html
 
 ## Architecture
