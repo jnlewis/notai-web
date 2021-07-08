@@ -38,40 +38,14 @@ The service introduces the ability for an individual on the blockchain to create
     b. The designated address.
     c. The public HTTP API condition that must match in order for the payment to release.
     d. The payment expiry date.
-3.      When payment is created, assets from sender account is transferred to temporary escrow.
+3.  When payment is created, assets from sender account is transferred to temporary escrow.
 4.  Sender can send the payment URL to recipient.
 5.  Recipient will access the payment URL to read the condition of release and to release the payment.
 6.  Notai will verify that the payment can be released before forwarding the request to Smart Contract to perform the decentralized verification.
 7.  When release condition is fulfilled, the assets in the temporary escrow is transferred to the recipient.
 8.  In the event that payment expiry specified in Step 2 has elapsed, the sender can cancel the payment where the assets will be transferred back to the sender address.
 
-## Service Fee
-
-## Screenshots
-
-<p align="center">
-    <img src="https://raw.githubusercontent.com/jnlewis/notai-web/main/docs/images/screenshot_main.png" alt="Landing Page">
-</p>
-
-<p align="center">
-    <img src="https://raw.githubusercontent.com/jnlewis/notai-web/main/docs/images/screenshot_howitworks.png" alt="How it works">
-</p>
-
-<p align="center">
-    <img src="https://raw.githubusercontent.com/jnlewis/notai-web/main/docs/images/screenshot_desktop_mobile.png" alt="Desktop Mobile Screenshot">
-</p>
-
-<p align="center">
-    <img src="https://raw.githubusercontent.com/jnlewis/notai-web/main/docs/images/screenshot_login.png" alt="Login Page">
-</p>
-
-<p align="center">
-    <img src="https://raw.githubusercontent.com/jnlewis/notai-web/main/docs/images/screenshot_createpayment.png" alt="Create Payment">
-</p>
-
-<p align="center">
-    <img src="https://raw.githubusercontent.com/jnlewis/notai-web/main/docs/images/screenshot_receive.png" alt="Receive Payment">
-</p>
+**Service Fee** A service fee of 0.5 GAS is applied for each payment created. This fee will be transferred to the Smart Contract. Part of this fee will be used to pay for the Oracle service used to verify the payment release condition when the recipient releases a payment.
 
 ## Technologies
 
@@ -105,6 +79,32 @@ Dashboard and pipeline: https://vercel.com/jnlewis/notai-web
 ## NEO Frontier Hackathon
 
 The project will be submitted as a hackathon entry on the NEO Frontier Blockchain Launchpad. The project plan document submitted in the first part of the hackathon can be found <a href="https://github.com/jnlewis/notai/blob/master/docs/Planathon.md">here</a>
+
+## Screenshots
+
+<p align="center">
+    <img src="https://raw.githubusercontent.com/jnlewis/notai-web/main/docs/images/screenshot_main.png" alt="Landing Page">
+</p>
+
+<p align="center">
+    <img src="https://raw.githubusercontent.com/jnlewis/notai-web/main/docs/images/screenshot_howitworks.png" alt="How it works">
+</p>
+
+<p align="center">
+    <img src="https://raw.githubusercontent.com/jnlewis/notai-web/main/docs/images/screenshot_desktop_mobile.png" alt="Desktop Mobile Screenshot">
+</p>
+
+<p align="center">
+    <img src="https://raw.githubusercontent.com/jnlewis/notai-web/main/docs/images/screenshot_login.png" alt="Login Page">
+</p>
+
+<p align="center">
+    <img src="https://raw.githubusercontent.com/jnlewis/notai-web/main/docs/images/screenshot_createpayment.png" alt="Create Payment">
+</p>
+
+<p align="center">
+    <img src="https://raw.githubusercontent.com/jnlewis/notai-web/main/docs/images/screenshot_receive.png" alt="Receive Payment">
+</p>
 
 ## License
 
