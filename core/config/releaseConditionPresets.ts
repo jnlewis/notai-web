@@ -15,7 +15,8 @@ export const releaseConditionPresets: ConditionPreset[] = [
     key: 'demo',
     name: 'Demo',
     description: 'The NOTAI demo API call',
-    conditionApi: 'https://raw.githubusercontent.com/jnlewis/notai-web/main/public/example/api-response-true.json',
+    conditionApi:
+      'https://raw.githubusercontent.com/jnlewis/notai-web/main/public/example/api-response-true.json',
     conditionField: '$.payment.canBeClaimed',
     conditionFieldType: 'text',
     conditionOperator: '=',

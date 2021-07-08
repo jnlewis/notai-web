@@ -1,5 +1,5 @@
-import * as nep17 from "./nep17";
-import { SmartContract } from "./contract";
+import * as nep17 from './nep17';
+import { SmartContract } from './contract';
 import {
   getSystemFee,
   calculateNetworkFee,
@@ -7,7 +7,7 @@ import {
   addFees,
   deployContract,
   getContractHash,
-} from "./helpers";
+} from './helpers';
 
 const txHelpers = {
   getSystemFee,

@@ -233,12 +233,10 @@ export default function Home() {
                       <i aria-hidden className="fas fa-hand-holding-usd"></i>
                     </div>
                     <h4 className="title">Escrow Agreement</h4>
-                    <p className="description">
-                    </p>
+                    <p className="description"></p>
                   </div>
                 </div>
               </div>
-
             </div>
           </div>
         </section>

@@ -5,7 +5,6 @@ import logger from '../utils/logger';
 import { SmartContract } from './../neonjsExperimental';
 
 class SmartContractService {
-
   private rpcEndpoint: string = AppConfig.env.rpcEndpoint;
   private networkMagic: number = AppConfig.env.networkMagic;
   private contractScriptHash: string = AppConfig.env.contractScriptHash;
@@ -14,8 +13,8 @@ class SmartContractService {
   public Assets = {
     NEO: 'NEO',
     GAS: 'GAS',
-  }
-  
+  };
+
   private convertStringToHex = (value: string) => u.str2hexstring(value);
   private convertHexToString = (value: string) => u.hexstring2str(value);
   private reverseHex = (value: string) => u.reverseHex(value);
@@ -30,33 +29,33 @@ class SmartContractService {
       networkMagic: this.networkMagic,
       rpcAddress: this.rpcEndpoint,
       account: new wallet.Account(creatorPrivateKey),
-    }
+    };
     const contract = new SmartContract(u.HexString.fromHex(this.contractScriptHash), config);
 
     // convert amount to whole number (smart contract does not support decimal)
     payment.amount = this.toWholeNumber(payment.amount);
-    
-    const response = await contract.invoke("createPayment", [
-        sc.ContractParam.hash160(payment.paymentAddress),
-        sc.ContractParam.hash160(payment.creatorAddress),
-        sc.ContractParam.hash160(payment.recipientAddress),
-        sc.ContractParam.string(payment.paymentAddress),
-        sc.ContractParam.string(payment.creatorAddress),
-        sc.ContractParam.string(payment.recipientAddress),
-        sc.ContractParam.string(payment.title),
-        sc.ContractParam.string(payment.asset),
-        sc.ContractParam.integer(payment.amount),
-        sc.ContractParam.integer(payment.expiry),
-        sc.ContractParam.string(payment.status),
-        sc.ContractParam.string(payment.conditionApi),
-        sc.ContractParam.string(payment.conditionField),
-        sc.ContractParam.string(payment.conditionFieldType),
-        sc.ContractParam.string(payment.conditionOperator),
-        sc.ContractParam.string(payment.conditionValue),
+
+    const response = await contract.invoke('createPayment', [
+      sc.ContractParam.hash160(payment.paymentAddress),
+      sc.ContractParam.hash160(payment.creatorAddress),
+      sc.ContractParam.hash160(payment.recipientAddress),
+      sc.ContractParam.string(payment.paymentAddress),
+      sc.ContractParam.string(payment.creatorAddress),
+      sc.ContractParam.string(payment.recipientAddress),
+      sc.ContractParam.string(payment.title),
+      sc.ContractParam.string(payment.asset),
+      sc.ContractParam.integer(payment.amount),
+      sc.ContractParam.integer(payment.expiry),
+      sc.ContractParam.string(payment.status),
+      sc.ContractParam.string(payment.conditionApi),
+      sc.ContractParam.string(payment.conditionField),
+      sc.ContractParam.string(payment.conditionFieldType),
+      sc.ContractParam.string(payment.conditionOperator),
+      sc.ContractParam.string(payment.conditionValue),
     ]);
 
     logger.logInfo('smartContractService.createPayment', 'Contract response', response);
-  
+
     return true;
   }
 
@@ -67,15 +66,15 @@ class SmartContractService {
       networkMagic: this.networkMagic,
       rpcAddress: this.rpcEndpoint,
       account: new wallet.Account(creatorPrivateKey),
-    }
+    };
     const contract = new SmartContract(u.HexString.fromHex(this.contractScriptHash), config);
 
-    const response = await contract.invoke("releasePayment", [
-        sc.ContractParam.hash160(paymentAddress),
+    const response = await contract.invoke('releasePayment', [
+      sc.ContractParam.hash160(paymentAddress),
     ]);
 
     logger.logInfo('smartContractService.cancelPayment', 'Contract response', response);
-  
+
     return true;
   }
 
@@ -86,15 +85,15 @@ class SmartContractService {
       networkMagic: this.networkMagic,
       rpcAddress: this.rpcEndpoint,
       account: new wallet.Account(this.contractKey),
-    }
+    };
     const contract = new SmartContract(u.HexString.fromHex(this.contractScriptHash), config);
 
-    const response = await contract.invoke("releasePayment", [
-        sc.ContractParam.hash160(paymentAddress),
+    const response = await contract.invoke('releasePayment', [
+      sc.ContractParam.hash160(paymentAddress),
     ]);
 
     logger.logInfo('smartContractService.releasePayment', 'Contract response', response);
-  
+
     return true;
   }
 
@@ -120,14 +119,12 @@ class SmartContractService {
     logger.logInfo('smartContractService.getPayment', 'begin');
 
     const rpcClient = new rpc.RPCClient(this.rpcEndpoint);
-    const response = await rpcClient.invokeFunction(
-      this.contractScriptHash,
-      'getPayment',
-      [sc.ContractParam.hash160(paymentAddress)]
-    );
+    const response = await rpcClient.invokeFunction(this.contractScriptHash, 'getPayment', [
+      sc.ContractParam.hash160(paymentAddress),
+    ]);
 
     logger.logInfo('smartContractService.getPayment', 'Contract response', response);
-  
+
     const result: Payment = this.mapResponseToPayment(response.stack[0]);
 
     return result;
@@ -140,15 +137,15 @@ class SmartContractService {
     const response = await rpcClient.invokeFunction(
       this.contractScriptHash,
       'getPaymentsByCreator',
-      [sc.ContractParam.hash160(creatorAddress)]
+      [sc.ContractParam.hash160(creatorAddress)],
     );
 
     logger.logInfo('smartContractService.getPaymentsByCreator', 'Contract response', response);
-  
+
     const result: Payment[] = [];
-    
+
     // @ts-ignore
-    response.stack[0].value.forEach(element => {
+    response.stack[0].value.forEach((element) => {
       result.push(this.mapResponseToPayment(element));
     });
 
@@ -160,19 +157,17 @@ class SmartContractService {
 
     const assetHash = this.getAssetHash(asset);
     const rpcClient = new rpc.RPCClient(this.rpcEndpoint);
-    const response = await rpcClient.invokeFunction(
-      assetHash,
-      'balanceOf',
-      [sc.ContractParam.hash160(address)]
-    );
+    const response = await rpcClient.invokeFunction(assetHash, 'balanceOf', [
+      sc.ContractParam.hash160(address),
+    ]);
 
     logger.logInfo('smartContractService.getBalance', 'Contract response', response);
-  
-    if (response.state !== "HALT") {
+
+    if (response.state !== 'HALT') {
       logger.logError('smartContractService.getBalance', response.exception);
       throw new Error(response.exception);
     }
-    
+
     let balance = this.toDecimalNumber(Number(response.stack[0].value));
     return balance;
   }

@@ -23,7 +23,7 @@ export default function Create() {
   const [showMessageDialog, setShowMessageDialog] = useState(false);
   const [messageDialogTitle, setMessageDialogTitle] = useState('');
   const [messageDialogDesc, setMessageDialogDesc] = useState('');
-  
+
   const [balance, setBalance] = useState('0.00');
 
   // User input states
@@ -46,17 +46,17 @@ export default function Create() {
       return;
     }
 
-    setBalance("Retrieving...");
-    smartContractService.getBalance(selected, walletService.getLoggedInAddress())
-    .then(balance => {
-      setBalance(balance.toFixed(2).toString());
-    })
-    .catch(error => {
-      setBalance('Failed to retrieve');
-      logger.logError('Create.selectAsset', error);
-    });
-
-  }
+    setBalance('Retrieving...');
+    smartContractService
+      .getBalance(selected, walletService.getLoggedInAddress())
+      .then((balance) => {
+        setBalance(balance.toFixed(2).toString());
+      })
+      .catch((error) => {
+        setBalance('Failed to retrieve');
+        logger.logError('Create.selectAsset', error);
+      });
+  };
 
   const onPresetSelected = (preset: ConditionPreset) => {
     setShowPreset(false);
@@ -90,7 +90,10 @@ export default function Create() {
     }
 
     if (inputAmount > Number(balance)) {
-      showMessage('Insufficient Balance', `You do not have enough ${inputAsset} balance to make the payment.`);
+      showMessage(
+        'Insufficient Balance',
+        `You do not have enough ${inputAsset} balance to make the payment.`,
+      );
       return;
     }
 
@@ -143,7 +146,7 @@ export default function Create() {
         setInputConditionFieldType('text');
         setInputConditionOperator('=');
         setInputConditionValue('');
-        setBalance('0.00')
+        setBalance('0.00');
       })
       .catch(() => {
         showMessage(
@@ -209,12 +212,7 @@ export default function Create() {
               <div className="col-6">
                 <div className="form-group">
                   <label>Balance</label>
-                  <input
-                    className="form-control-plaintext"
-                    type="text"
-                    value={balance}
-                    readOnly
-                  />
+                  <input className="form-control-plaintext" type="text" value={balance} readOnly />
                 </div>
               </div>
             </div>
@@ -247,7 +245,6 @@ export default function Create() {
                 </div>
               </div>
             </div>
-            
           </div>
         </div>
 

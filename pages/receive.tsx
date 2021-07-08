@@ -12,28 +12,34 @@ interface ReceiveProps {
 }
 
 export default function Receive({ payment }: ReceiveProps): React.ReactElement {
-
   const [showMessageDialog, setShowMessageDialog] = useState(false);
   const [messageDialogTitle, setMessageDialogTitle] = useState('');
   const [messageDialogDesc, setMessageDialogDesc] = useState('');
   const [isPaymentOpen, setIsPaymentOpen] = useState(true);
 
   const releasePayment = (paymentAddress: string) => {
-    paymentService.releasePayment(paymentAddress)
-    .then((result) => {
-      if (result) {
-        showMessage('Release Successful', 'The payment is successful. Please allow a few minutes for transaction to take place.');
-        setIsPaymentOpen(false);
-      } else {
-        showMessage('Condition Not Met', 'The condition for the release of this payment is not yet met.');
-      }
-    })
-    .catch(() => {
-      showMessage(
-        'Release Failed',
-        'Release was not successful. Please try again or contact support.',
-      );
-    });
+    paymentService
+      .releasePayment(paymentAddress)
+      .then((result) => {
+        if (result) {
+          showMessage(
+            'Release Successful',
+            'The payment is successful. Please allow a few minutes for transaction to take place.',
+          );
+          setIsPaymentOpen(false);
+        } else {
+          showMessage(
+            'Condition Not Met',
+            'The condition for the release of this payment is not yet met.',
+          );
+        }
+      })
+      .catch(() => {
+        showMessage(
+          'Release Failed',
+          'Release was not successful. Please try again or contact support.',
+        );
+      });
   };
 
   const showMessage = (title: string, message: string) => {

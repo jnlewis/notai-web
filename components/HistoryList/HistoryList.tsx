@@ -55,7 +55,8 @@ export default function HistoryList() {
                   {item.amount} {item.asset}
                 </h6>
                 <p className="card-text">
-                  Status: {item.status}<br />
+                  Status: {item.status}
+                  <br />
                   Expires on: {toShortDateFormat(unixTimeToDate(item.expiry))}
                 </p>
               </a>

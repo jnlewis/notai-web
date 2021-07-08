@@ -1,14 +1,14 @@
 import { tx, wallet, settings } from '@cityofzion/neon-core';
 import { Payment } from '../interfaces/payment';
-import { getCurrentDomain } from '../utils/environmentUtil';
 import jsonpath from 'jsonpath';
 import logger from '../utils/logger';
 import smartContractService from './smartContractService';
 import walletService from './walletService';
+import { AppConfig } from '../config/appConfig';
 
 class PaymentService {
   getReceiveLink(paymentAddress: string) {
-    return `${getCurrentDomain()}/receive?a=${paymentAddress}`;
+    return `${AppConfig.env.receivePaymentPath}/receive?a=${paymentAddress}`;
   }
 
   generatePaymentAddress(): string {
@@ -23,13 +23,13 @@ class PaymentService {
 
   async getActivePaymentByCreator(creatorAddress: string): Promise<Payment[]> {
     const payments = await smartContractService.getPaymentsByCreator(creatorAddress);
-    const result = payments.filter(item => item.status === 'open');
+    const result = payments.filter((item) => item.status === 'open');
     return result;
   }
 
   async getInactivePaymentByCreator(creatorAddress: string): Promise<Payment[]> {
     const payments = await smartContractService.getPaymentsByCreator(creatorAddress);
-    const result = payments.filter(item => item.status !== 'open');
+    const result = payments.filter((item) => item.status !== 'open');
     return result;
   }
 
@@ -81,10 +81,11 @@ class PaymentService {
       }
     }
 
-    if (payment.conditionFieldType == 'number' &&
-        Number(queryValue) !== NaN &&
-        Number(payment.conditionValue) !== NaN) {
-
+    if (
+      payment.conditionFieldType == 'number' &&
+      Number(queryValue) !== NaN &&
+      Number(payment.conditionValue) !== NaN
+    ) {
       if (payment.conditionOperator === '=') {
         result = Number(queryValue) === Number(payment.conditionValue);
       }

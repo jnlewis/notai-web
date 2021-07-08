@@ -1,6 +1,6 @@
-import { CommonConfig } from "./types";
-import { rpc, tx, sc, u } from "@cityofzion/neon-core";
-import { addFees, setBlockExpiry } from "./helpers";
+import { CommonConfig } from './types';
+import { rpc, tx, sc, u } from '@cityofzion/neon-core';
+import { addFees, setBlockExpiry } from './helpers';
 
 export class SmartContract {
   /**
@@ -27,14 +27,9 @@ export class SmartContract {
   public async testInvoke(
     operation: string,
     params?: sc.ContractParam[],
-    signers?: tx.Signer[]
+    signers?: tx.Signer[],
   ): Promise<rpc.InvokeResult> {
-    return this.rpcClient.invokeFunction(
-      this.contractHash.toString(),
-      operation,
-      params,
-      signers
-    );
+    return this.rpcClient.invokeFunction(this.contractHash.toString(), operation, params, signers);
   }
 
   /**
@@ -50,29 +45,22 @@ export class SmartContract {
    * @param callFlags - call flag required for the operation to call.
    * @returns transaction id
    */
-  public async invoke(
-    operation: string,
-    params?: sc.ContractParam[]
-  ): Promise<string> {
+  public async invoke(operation: string, params?: sc.ContractParam[]): Promise<string> {
     const builder = new sc.ScriptBuilder();
     builder.emitAppCall(this.contractHash.toString(), operation, params);
 
     const transaction = new tx.Transaction();
     transaction.script = u.HexString.fromHex(builder.build());
 
-    await setBlockExpiry(
-      transaction,
-      this.config,
-      this.config.blocksTillExpiry
-    );
+    await setBlockExpiry(transaction, this.config, this.config.blocksTillExpiry);
 
     // add a sender
     if (this.config.account === undefined)
-      throw new Error("Account in your config cannot be undefined");
+      throw new Error('Account in your config cannot be undefined');
 
     transaction.addSigner({
       account: this.config.account.scriptHash,
-      scopes: "CalledByEntry",
+      scopes: 'CalledByEntry',
     });
 
     await addFees(transaction, this.config);
