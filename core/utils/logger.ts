@@ -3,9 +3,6 @@ class Logger {
   isLogWarningEnabled = true;
   isLogErrorEnabled = true;
 
-  isShowProdBrowserLogs = false;
-  isConfigLoaded = false;
-
   constructor() {
     this.isLogInfoEnabled = true;
     this.isLogWarningEnabled = true;
