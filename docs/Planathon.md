@@ -16,11 +16,15 @@ The use of a blockchain provides resilience to downsides of centralized systems 
 
 ## Features
 
-• Create funds for other accounts to receive, with the ability to specify claim conditions and timeout period.
-• Claim funds which is addressed to you.
-• Accessible from a web browser.
-• Designed for both desktop and mobile platforms.
-• Log in using personal wallet key.
+- Create funds for other accounts to receive, with the ability to specify claim conditions and timeout period.
+
+- Claim funds which is addressed to you.
+
+- Accessible from a web browser.
+
+- Designed for both desktop and mobile platforms.
+
+- Log in using personal wallet key.
 
 ## Process Flow
 
