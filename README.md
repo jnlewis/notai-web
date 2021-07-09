@@ -108,4 +108,4 @@ The project will be submitted as a hackathon entry on the NEO Frontier Blockchai
 
 ## License
 
-- Open source <a href="https://github.com/jnlewis/notai/blob/master/LICENSE">Apache-2.0 License</a>
+- Open source <a href="https://github.com/jnlewis/notai-web/blob/main/LICENSE">Apache-2.0 License</a>
