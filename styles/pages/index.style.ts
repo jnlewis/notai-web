@@ -342,6 +342,13 @@ export default css.global`
     -webkit-text-fill-color: transparent;
   }
 
+  .fa-icon {
+    height: 50px;
+    width: 50px;
+    color: #1dc8cd;
+    margin: 0 auto;
+  }
+
   #features .title {
     font-weight: 300;
     margin-bottom: 15px;
@@ -572,7 +579,6 @@ export default css.global`
   }
 
   #contact .info p {
-    padding: 0 0 10px 42px;
     line-height: 28px;
     font-size: 14px;
   }

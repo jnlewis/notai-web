@@ -1,6 +1,8 @@
 import React from 'react';
 import styles from '../styles/pages/index.style';
 import PageHead from '../components/Global/PageHead';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faHandshake, faMoneyCheck, faTrophy, faUmbrellaBeach } from '@fortawesome/free-solid-svg-icons';
 
 export default function Home() {
   return (
@@ -79,11 +81,10 @@ export default function Home() {
                     <i>1</i>
                   </div>
                   <h4 className="title">
-                    <a href="">Create Payment</a>
+                    <a href="">Create Conditional Payment</a>
                   </h4>
                   <p className="description">
-                    Send blockchain assets to anyone, set your own criteria for payment release, and
-                    expiry date for the payment.
+                    Send assets to anyone, set your own API condition for payment release, and a claim expiry date.
                   </p>
                 </div>
               </div>
@@ -97,7 +98,7 @@ export default function Home() {
                     <a href="">Share Link With Recipient</a>
                   </h4>
                   <p className="description">
-                    The funds are transfered to a temporary escrow account. A link will be provided
+                    The funds are locked to a temporary escrow account. A link will be provided
                     for you to share with the recipient.
                   </p>
                 </div>
@@ -112,8 +113,8 @@ export default function Home() {
                     <a href="">Payment Release Verification</a>
                   </h4>
                   <p className="description">
-                    The recipient visits the receive payment link to release the escrow. Notai will
-                    verify the release condition on public APIs on the internet.
+                    The recipient visits the payment link to release the payment. Notai will 
+                    verify the release condition as configured by sender on the internet.
                   </p>
                 </div>
               </div>
@@ -127,7 +128,7 @@ export default function Home() {
                     <a href="">Payment Transacted</a>
                   </h4>
                   <p className="description">
-                    When the release criteria is fulfilled, the transaction will be made from the
+                    When the release criteria is fulfilled, the funds will be transferred from the
                     temporary escrow account to the recipients account.
                   </p>
                 </div>
@@ -178,7 +179,7 @@ export default function Home() {
                 <a
                   className="cta-btn align-middle"
                   target="_blank"
-                  href="https://github.com/jnlewis/notai"
+                  href="https://github.com/jnlewis/notai-web"
                 >
                   View Github
                 </a>
@@ -201,8 +202,8 @@ export default function Home() {
               <div className="col-lg-10 offset-lg-1">
                 <div className="row">
                   <div className="col-lg-6 col-md-6 box">
-                    <div className="icon">
-                      <i aria-hidden className="fas fa-money-check"></i>
+                    <div className="fa-icon">
+                        <FontAwesomeIcon icon={faMoneyCheck} />
                     </div>
                     <h4 className="title">Scheduled Payouts</h4>
                     <p className="description">
@@ -211,29 +212,36 @@ export default function Home() {
                   </div>
                   <div className="col-lg-6 col-md-6 box">
                     <div className="icon">
-                      <i aria-hidden className="fas fa-umbrella-beach"></i>
+                      <div className="fa-icon">
+                          <FontAwesomeIcon icon={faHandshake} />
+                      </div>
                     </div>
-                    <h4 className="title">Payment on Delivery</h4>
+                    <h4 className="title">Escrow Agreements</h4>
                     <p className="description">
-                      Safely purchase any assets verifiable on the internet.
+                      Create escrow contracts that outlines the terms and conditions between two parties.
                     </p>
                   </div>
                   <div className="col-lg-6 col-md-6 box">
                     <div className="icon">
-                      <i aria-hidden className="fas fa-funnel-dollar"></i>
+                      <div className="fa-icon">
+                          <FontAwesomeIcon icon={faUmbrellaBeach} />
+                      </div>
                     </div>
                     <h4 className="title">Retirement Savings</h4>
                     <p className="description">
-                      Create steady withdrawals at specified intervals to make sure your money lasts
-                      while giving you peace of mind.
+                      Build up a saving funds that can be unlocked at a future date.
                     </p>
                   </div>
                   <div className="col-lg-6 col-md-6 box">
                     <div className="icon">
-                      <i aria-hidden className="fas fa-hand-holding-usd"></i>
+                      <div className="fa-icon">
+                          <FontAwesomeIcon icon={faTrophy} />
+                      </div>
                     </div>
-                    <h4 className="title">Escrow Agreement</h4>
-                    <p className="description"></p>
+                    <h4 className="title">Lottery, Games &amp; Prizes</h4>
+                    <p className="description">
+                      Competition hosts and licensed betting firms can issue claimable prizes .
+                    </p>
                   </div>
                 </div>
               </div>
@@ -258,9 +266,8 @@ export default function Home() {
                 <div className="info">
                   <div>
                     <h4>Contact</h4>
-                    <i className="fas fa-envelope" style={{ float: 'left' }}></i>
                     <p>
-                      <a target="_blank" href="https://github.com/jnlewis/notai">
+                      <a target="_blank" href="https://github.com/jnlewis/notai-web">
                         Find us on Github
                       </a>
                     </p>

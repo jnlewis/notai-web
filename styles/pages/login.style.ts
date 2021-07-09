@@ -4,6 +4,9 @@ export default css.global`
   .icon-large {
     font-size: 48px;
   }
+  .icon-large-2 {
+    width: 48px;
+  }
 
   .body {
     background: #fff;
@@ -88,6 +91,13 @@ export default css.global`
 
   #more-features .icon {
     float: left;
+    margin-right: 30px;
+  }
+  
+  @media (max-width: 767px) {
+    #more-features .icon {
+      display: none !important;
+    }
   }
 
   #more-features .icon mat-icon {
@@ -102,7 +112,7 @@ export default css.global`
   }
 
   #more-features h4 {
-    margin-left: 100px;
+    margin-left: 50px;
     font-weight: 700;
     margin-bottom: 15px;
     font-size: 18px;
@@ -114,7 +124,7 @@ export default css.global`
 
   #more-features p {
     font-size: 14px;
-    margin-left: 100px;
+    margin-left: 50px;
     margin-bottom: 0;
     line-height: 24px;
   }
@@ -123,6 +133,12 @@ export default css.global`
     float: left;
     font-size: 30px;
     padding-left: 40px;
+    color: #cd1d1d;
+  }
+
+  .warning-icon-2 {
+    float: left;
+    width: 30px;
     color: #cd1d1d;
   }
 

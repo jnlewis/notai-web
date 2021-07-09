@@ -6,9 +6,8 @@ import { useRouter } from 'next/router';
 import PageHead from '../components/Global/PageHead';
 import HeaderLogin from '../components/HeaderLogin/HeaderLogin';
 import walletService from '../core/services/walletService';
-import PaymentService from '../core/services/paymentService';
-import { Payment } from '../core/interfaces/payment';
-import smartContractService from '../core/services/smartContractService';
+import { faExclamationTriangle, faKey, faWallet } from '@fortawesome/free-solid-svg-icons';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
 export default function Login(): React.ReactElement {
   const router = useRouter();
@@ -69,7 +68,9 @@ export default function Login(): React.ReactElement {
                 <div className="file-input box">
                   <div style={{ padding: 40 + 'px' }}>
                     <div className="icon">
-                      <i aria-hidden className="fas fa-key icon-large"></i>
+                      <div className='icon-large-2'>
+                        <FontAwesomeIcon icon={faKey} />
+                      </div>
                     </div>
                     <h4 className="title">
                       <a onClick={handleShowLoginByKey}>Login with Private Key</a>
@@ -87,7 +88,9 @@ export default function Login(): React.ReactElement {
                 <div className="file-input box">
                   <div style={{ padding: 40 + 'px' }}>
                     <div className="icon">
-                      <i aria-hidden className="fas fa-wallet icon-large"></i>
+                      <div className='icon-large-2'>
+                        <FontAwesomeIcon icon={faWallet} />
+                      </div>
                     </div>
                     <h4 className="title">
                       <a>Login with WalletConnect (Coming Soon)</a>
@@ -108,7 +111,9 @@ export default function Login(): React.ReactElement {
             </div>
             <div className="row" style={{ marginTop: 20 + 'px' }}>
               <div className="col-lg-12 section-header">
-                <i aria-hidden className="fas fa-exclamation-triangle warning-icon"></i>
+                <div className='warning-icon-2'>
+                  <FontAwesomeIcon icon={faExclamationTriangle} />
+                </div>
                 <p className="section-description" style={{ textAlign: 'left' }}>
                   Alpha Build: NOTAI is currently in development and will use the NEO Testnet for
                   all blockchain transactions.
