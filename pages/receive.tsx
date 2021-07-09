@@ -15,7 +15,7 @@ export default function Receive({ payment }: ReceiveProps): React.ReactElement {
   const [showMessageDialog, setShowMessageDialog] = useState(false);
   const [messageDialogTitle, setMessageDialogTitle] = useState('');
   const [messageDialogDesc, setMessageDialogDesc] = useState('');
-  const [isPaymentOpen, setIsPaymentOpen] = useState(true);
+  const [isPaymentReleased, setIsPaymentReleased] = useState(false);
 
   const releasePayment = (paymentAddress: string) => {
     showMessage('Please Wait', 'Releasing payment...');
@@ -28,7 +28,7 @@ export default function Receive({ payment }: ReceiveProps): React.ReactElement {
             'Release Successful',
             'The payment is successful. Please allow a few minutes for transaction to take place.',
           );
-          setIsPaymentOpen(false);
+          setIsPaymentReleased(true);
         } else {
           showMessage(
             'Condition Not Met',
@@ -119,7 +119,7 @@ export default function Receive({ payment }: ReceiveProps): React.ReactElement {
                   <div>
                     <b>Matching:</b> {payment.conditionOperator} {payment.conditionValue}
                   </div>
-                  {isPaymentOpen && (
+                  {(!isPaymentReleased && payment.status === 'open') && (
                     <div className="text-center mt-4">
                       <a
                         href="#"

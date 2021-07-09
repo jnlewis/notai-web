@@ -8,7 +8,7 @@ import { AppConfig } from '../config/appConfig';
 
 class PaymentService {
   getReceiveLink(paymentAddress: string) {
-    return `${AppConfig.env.receivePaymentPath}/receive?a=${paymentAddress}`;
+    return `${AppConfig.env.receivePaymentPath}?a=${paymentAddress}`;
   }
 
   generatePaymentAddress(): string {

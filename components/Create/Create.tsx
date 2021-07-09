@@ -150,7 +150,8 @@ export default function Create() {
         setInputConditionValue('');
         setBalance('0.00');
       })
-      .catch(() => {
+      .catch((error) => {
+        logger.logError('Create.createPayment', 'Failed to create payment: ', error);
         showMessage(
           'Submission Failed',
           'Submission was not successful. Please try again or contact support.',
