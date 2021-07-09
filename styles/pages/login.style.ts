@@ -93,7 +93,7 @@ export default css.global`
     float: left;
     margin-right: 30px;
   }
-  
+
   @media (max-width: 767px) {
     #more-features .icon {
       display: none !important;

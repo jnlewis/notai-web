@@ -2,7 +2,12 @@ import React from 'react';
 import styles from '../styles/pages/index.style';
 import PageHead from '../components/Global/PageHead';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faHandshake, faMoneyCheck, faTrophy, faUmbrellaBeach } from '@fortawesome/free-solid-svg-icons';
+import {
+  faHandshake,
+  faMoneyCheck,
+  faTrophy,
+  faUmbrellaBeach,
+} from '@fortawesome/free-solid-svg-icons';
 
 export default function Home() {
   return (
@@ -84,7 +89,8 @@ export default function Home() {
                     <a href="">Create Conditional Payment</a>
                   </h4>
                   <p className="description">
-                    Send assets to anyone, set your own API condition for payment release, and a claim expiry date.
+                    Send assets to anyone, set your own API condition for payment release, and a
+                    claim expiry date.
                   </p>
                 </div>
               </div>
@@ -98,8 +104,8 @@ export default function Home() {
                     <a href="">Share Link With Recipient</a>
                   </h4>
                   <p className="description">
-                    The funds are locked to a temporary escrow account. A link will be provided
-                    for you to share with the recipient.
+                    The funds are locked to a temporary escrow account. A link will be provided for
+                    you to share with the recipient.
                   </p>
                 </div>
               </div>
@@ -113,8 +119,8 @@ export default function Home() {
                     <a href="">Payment Release Verification</a>
                   </h4>
                   <p className="description">
-                    The recipient visits the payment link to release the payment. Notai will 
-                    verify the release condition as configured by sender on the internet.
+                    The recipient visits the payment link to release the payment. Notai will verify
+                    the release condition as configured by sender on the internet.
                   </p>
                 </div>
               </div>
@@ -203,7 +209,7 @@ export default function Home() {
                 <div className="row">
                   <div className="col-lg-6 col-md-6 box">
                     <div className="fa-icon">
-                        <FontAwesomeIcon icon={faMoneyCheck} />
+                      <FontAwesomeIcon icon={faMoneyCheck} />
                     </div>
                     <h4 className="title">Scheduled Payouts</h4>
                     <p className="description">
@@ -213,18 +219,19 @@ export default function Home() {
                   <div className="col-lg-6 col-md-6 box">
                     <div className="icon">
                       <div className="fa-icon">
-                          <FontAwesomeIcon icon={faHandshake} />
+                        <FontAwesomeIcon icon={faHandshake} />
                       </div>
                     </div>
                     <h4 className="title">Escrow Agreements</h4>
                     <p className="description">
-                      Create escrow contracts that outlines the terms and conditions between two parties.
+                      Create escrow contracts that outlines the terms and conditions between two
+                      parties.
                     </p>
                   </div>
                   <div className="col-lg-6 col-md-6 box">
                     <div className="icon">
                       <div className="fa-icon">
-                          <FontAwesomeIcon icon={faUmbrellaBeach} />
+                        <FontAwesomeIcon icon={faUmbrellaBeach} />
                       </div>
                     </div>
                     <h4 className="title">Retirement Savings</h4>
@@ -235,7 +242,7 @@ export default function Home() {
                   <div className="col-lg-6 col-md-6 box">
                     <div className="icon">
                       <div className="fa-icon">
-                          <FontAwesomeIcon icon={faTrophy} />
+                        <FontAwesomeIcon icon={faTrophy} />
                       </div>
                     </div>
                     <h4 className="title">Lottery, Games &amp; Prizes</h4>

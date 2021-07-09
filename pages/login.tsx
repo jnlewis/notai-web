@@ -68,7 +68,7 @@ export default function Login(): React.ReactElement {
                 <div className="file-input box">
                   <div style={{ padding: 40 + 'px' }}>
                     <div className="icon">
-                      <div className='icon-large-2'>
+                      <div className="icon-large-2">
                         <FontAwesomeIcon icon={faKey} />
                       </div>
                     </div>
@@ -88,7 +88,7 @@ export default function Login(): React.ReactElement {
                 <div className="file-input box">
                   <div style={{ padding: 40 + 'px' }}>
                     <div className="icon">
-                      <div className='icon-large-2'>
+                      <div className="icon-large-2">
                         <FontAwesomeIcon icon={faWallet} />
                       </div>
                     </div>
@@ -111,7 +111,7 @@ export default function Login(): React.ReactElement {
             </div>
             <div className="row" style={{ marginTop: 20 + 'px' }}>
               <div className="col-lg-12 section-header">
-                <div className='warning-icon-2'>
+                <div className="warning-icon-2">
                   <FontAwesomeIcon icon={faExclamationTriangle} />
                 </div>
                 <p className="section-description" style={{ textAlign: 'left' }}>
