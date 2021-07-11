@@ -71,6 +71,8 @@ The service introduces the ability for an individual on the blockchain to create
 The alpha preview of the application is available here and is connected to the NEO TestNet. Note that in this build the application will write trace logs to browser console.
 <a href="https://notai.vercel.app" target="_blank">https://notai.vercel.app</a>
 
+Smart Contract hash on TestNet: 0x52097e39b603e8c3765f57dd0db894c99988efd1
+
 ## Deployment
 
 The frontend web application is hosted on Vercel and deployed through Vercel Github integration directly from the main branch.
