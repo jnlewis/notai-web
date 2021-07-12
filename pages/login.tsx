@@ -134,9 +134,9 @@ export default function Login(): React.ReactElement {
                   className="form-control"
                   value={input}
                   onInput={(e) => setInput((e.target as HTMLInputElement).value)}
-                  placeholder="Your NEO wallet private key"
+                  placeholder="Your NEO wallet private key (hexadecimal format)"
                 />
-                <small className="form-text text-muted">We'll never store your private key.</small>
+                <small className="form-text text-muted">Your private key is only kept on your local browser. We'll never store your private key.</small>
               </div>
             </div>
           </Modal.Body>
