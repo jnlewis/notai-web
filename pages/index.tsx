@@ -185,7 +185,7 @@ export default function Home() {
                 <a
                   className="cta-btn align-middle"
                   target="_blank"
-                  href="https://github.com/jnlewis/notai-web"
+                  href="https://github.com/jnlewis/notai-smart-contract"
                 >
                   View Github
                 </a>
