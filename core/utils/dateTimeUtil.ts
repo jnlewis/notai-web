@@ -28,12 +28,24 @@ export function unixTimeToDate(unixTimestamp: number): Date {
   return new Date(unixTimestamp);
 }
 
+export function isEqual(date: Date, compare: Date): boolean {
+  return date.getTime() == compare.getTime();
+}
+
 export function isEarlierThan(date: Date, compare: Date): boolean {
   return date.getTime() < compare.getTime();
 }
 
 export function isLaterThan(date: Date, compare: Date): boolean {
   return date.getTime() > compare.getTime();
+}
+
+export function isEarlierThanOrEqual(date: Date, compare: Date): boolean {
+  return date.getTime() <= compare.getTime();
+}
+
+export function isLaterThanOrEqual(date: Date, compare: Date): boolean {
+  return date.getTime() >= compare.getTime();
 }
 
 export function now(): Date {

@@ -156,9 +156,9 @@ export default function Home() {
                     <h2>Manage your payments in an easy to use interface.</h2>
                     <h3>Notai looks great on every platform from desktop to mobile.</h3>
                     <p>
-                      Easily manage your payments through the interactive user interface. 
-                      Create any number of payments easily with useful presets and Notai will keep track of them. 
-                      Cancel any payments that has been expired.
+                      Easily manage your payments through the interactive user interface. Create any
+                      number of payments easily with useful presets and Notai will keep track of
+                      them. Cancel any payments that has been expired.
                       <b>
                         Your payments assets are stored and executed on the blockchain without any
                         intervention. Your decision is final.

@@ -5,6 +5,13 @@ import logger from '../utils/logger';
 import smartContractService from './smartContractService';
 import walletService from './walletService';
 import { AppConfig } from '../config/appConfig';
+import {
+  isEarlierThan,
+  isEarlierThanOrEqual,
+  isEqual,
+  isLaterThan,
+  isLaterThanOrEqual,
+} from '../utils/dateTimeUtil';
 
 class PaymentService {
   getReceiveLink(paymentAddress: string) {
@@ -100,6 +107,27 @@ class PaymentService {
       }
       if (payment.conditionOperator === '<=') {
         result = Number(queryValue) <= Number(payment.conditionValue);
+      }
+    }
+
+    if (payment.conditionFieldType == 'datetime') {
+      const responseDate = new Date(queryValue);
+      const conditionDate = new Date(payment.conditionValue);
+
+      if (payment.conditionOperator === '=') {
+        result = isEqual(responseDate, conditionDate);
+      }
+      if (payment.conditionOperator === '>') {
+        result = isLaterThan(responseDate, conditionDate);
+      }
+      if (payment.conditionOperator === '>=') {
+        result = isLaterThanOrEqual(responseDate, conditionDate);
+      }
+      if (payment.conditionOperator === '<') {
+        result = isEarlierThan(responseDate, conditionDate);
+      }
+      if (payment.conditionOperator === '<=') {
+        result = isEarlierThanOrEqual(responseDate, conditionDate);
       }
     }
 
