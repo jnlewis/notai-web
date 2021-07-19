@@ -32,14 +32,14 @@ export default function Login(): React.ReactElement {
   const handleCloseLoginByKey = () => setShowLoginByKey(false);
   const handleShowLoginByKey = () => setShowLoginByKey(true);
   const loginWithSecret = () => {
-    if (walletService.isValidPrivateKey(input)) {
-      walletService.setLoggedInKey(input);
-      setIsLoading(true);
-      router.push('/account').then(() => window.scrollTo(0, 0));
-    } else {
-      setInput('');
-      alert('Unable to open wallet. Please ensure that the key is correct.');
-    }
+    // if (walletService.isValidPrivateKey(input)) {
+    walletService.setLoggedInKey(input);
+    setIsLoading(true);
+    router.push('/account').then(() => window.scrollTo(0, 0));
+    //} else {
+    //  setInput('');
+    //  alert('Unable to open wallet. Please ensure that the key is correct.');
+    //}
   };
 
   return (
@@ -134,9 +134,12 @@ export default function Login(): React.ReactElement {
                   className="form-control"
                   value={input}
                   onInput={(e) => setInput((e.target as HTMLInputElement).value)}
-                  placeholder="Your NEO wallet private key (hexadecimal format)"
+                  placeholder="Your NEO wallet key"
                 />
-                <small className="form-text text-muted">Your private key is only kept on your local browser. We'll never store your private key.</small>
+                <small className="form-text text-muted">
+                  Your private key is only kept on your local browser. We'll never store your
+                  private key.
+                </small>
               </div>
             </div>
           </Modal.Body>
